@@ -1,4 +1,6 @@
-// js/auth.js - Authentication & Storage Management System for LaylPur Bakery
+// js/auth.js - Authentication & Storage Management System for LaylPur Bakery with Cloud Firestore Sync
+import { db } from './firebase-config.js';
+import { doc, setDoc, onSnapshot } from "firebase/firestore";
 
 // Comprehensive default seed users
 const DEFAULT_USERS = [
@@ -9,20 +11,8 @@ const DEFAULT_USERS = [
     role: "admin"
   },
   {
-    name: "System Admin",
-    email: "admin@bakery.com",
-    password: "password123",
-    role: "admin"
-  },
-  {
     name: "Master Baker",
     email: "shopkeeper@laylpurbakery.com",
-    password: "password123",
-    role: "shopkeeper"
-  },
-  {
-    name: "Master Baker",
-    email: "shopkeeper@bakery.com",
     password: "password123",
     role: "shopkeeper"
   },
@@ -31,14 +21,32 @@ const DEFAULT_USERS = [
     email: "customer@laylpurbakery.com",
     password: "password123",
     role: "customer"
-  },
-  {
-    name: "Alice Baker",
-    email: "customer@bakery.com",
-    password: "password123",
-    role: "customer"
   }
 ];
+
+async function syncUsersToCloud(users) {
+  try {
+    await setDoc(doc(db, "laylpur_store", "users"), { data: users, updatedAt: new Date().toISOString() });
+  } catch (err) {
+    console.warn("Cloud Users Sync Warning:", err);
+  }
+}
+
+// Real-time Cloud Firestore User Listener
+try {
+  onSnapshot(doc(db, "laylpur_store", "users"), (docSnap) => {
+    if (docSnap.exists()) {
+      const cloudUsers = docSnap.data().data;
+      if (cloudUsers && Array.isArray(cloudUsers)) {
+        localStorage.setItem('users', JSON.stringify(cloudUsers));
+      }
+    }
+  }, (err) => {
+    console.warn("Cloud Firestore User listener warning:", err);
+  });
+} catch (e) {
+  console.warn("Could not init Firestore user listener:", e);
+}
 
 function initDefaultUsers() {
   let existing = [];
@@ -59,6 +67,7 @@ function initDefaultUsers() {
 
   if (updated || !localStorage.getItem('users')) {
     localStorage.setItem('users', JSON.stringify(existing));
+    syncUsersToCloud(existing);
   }
 }
 
@@ -74,6 +83,7 @@ function getUsers() {
 
 function saveUsers(users) {
   localStorage.setItem('users', JSON.stringify(users));
+  syncUsersToCloud(users);
 }
 
 function setCurrentUser(user) {
@@ -192,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    registerForm.addEventListener('submit', (e) => {
+    registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim().toLowerCase();
@@ -226,8 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const newUser = { name, email, password, role };
       users.push(newUser);
       saveUsers(users);
+      await syncUsersToCloud(users);
 
-      showToast('Registration successful! Redirecting to Sign In...', 'success');
+      showToast('Registration successful! Saved to Cloud. Redirecting...', 'success');
       setTimeout(() => {
         window.location.href = 'login.html';
       }, 1200);
@@ -256,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const user = users.find(u => u.email.toLowerCase() === email && u.password === password);
 
       if (!user) {
-        showToast('Invalid email or password. Use password123 or click Quick Demo Login below.', 'error');
+        showToast('Invalid email or password. Check spelling or register account.', 'error');
         return;
       }
 
