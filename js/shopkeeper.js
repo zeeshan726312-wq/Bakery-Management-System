@@ -30,6 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFeedbacksTable();
   renderStockAlerts();
   setupEventListeners();
+
+  // Listen for Cloud Firestore Realtime Sync updates across devices
+  window.addEventListener('cloudStoreUpdated', () => {
+    renderProductsTable();
+    renderOrderQueue();
+    renderSalesReport();
+    renderStockAlerts();
+    renderFeedbacksTable();
+  });
 });
 
 function setupEventListeners() {

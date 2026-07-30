@@ -1,4 +1,6 @@
-// js/store.js - Central Data Store & LocalStorage Sync for LaylPur Bakery
+// js/store.js - Central Data Store & Cloud Firestore Realtime Sync for LaylPur Bakery
+import { db } from './firebase-config.js';
+import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 
 // Seed Products including local picture assets (Barfi.webp, Biscuits.avif, Gulab Jamun.webp)
 const INITIAL_PRODUCTS = [
@@ -120,7 +122,7 @@ const INITIAL_ORDERS = [
     total: 23.50,
     paymentMethod: "Cash on Delivery",
     paymentStatus: "Paid",
-    status: "delivered", // pending, baking, ready, delivered, cancelled
+    status: "delivered",
     createdAt: "2026-07-29T10:30:00.000Z"
   }
 ];
@@ -144,7 +146,46 @@ const INITIAL_FEEDBACKS = [
   }
 ];
 
-// Store Helper Functions
+// Setup Realtime Cloud Sync via Cloud Firestore
+let isCloudSynced = false;
+
+async function syncDocToCloud(docName, data) {
+  try {
+    await setDoc(doc(db, "laylpur_store", docName), { data, updatedAt: new Date().toISOString() });
+  } catch (err) {
+    console.warn("Cloud Firestore Sync Warning:", err);
+  }
+}
+
+// Subscribe to Realtime Cloud Updates from Firestore
+function initRealtimeCloudSync() {
+  const collections = ['products', 'orders', 'discounts', 'feedbacks'];
+  
+  collections.forEach(col => {
+    onSnapshot(doc(db, "laylpur_store", col), (docSnap) => {
+      if (docSnap.exists()) {
+        const cloudData = docSnap.data().data;
+        if (cloudData && Array.isArray(cloudData)) {
+          localStorage.setItem(`bakery_${col}`, JSON.stringify(cloudData));
+          isCloudSynced = true;
+          // Dispatch custom event to notify active views to refresh
+          window.dispatchEvent(new CustomEvent('cloudStoreUpdated', { detail: { collection: col } }));
+        }
+      }
+    }, (err) => {
+      console.warn(`Firestore Realtime Listener [${col}] Warning:`, err);
+    });
+  });
+}
+
+// Initialize Cloud Listeners immediately
+try {
+  initRealtimeCloudSync();
+} catch (e) {
+  console.warn("Could not init Firestore Realtime listener:", e);
+}
+
+// Central Store Module
 export const Store = {
   // PRODUCTS
   getProducts() {
@@ -152,6 +193,7 @@ export const Store = {
     const data = localStorage.getItem('bakery_products');
     if (!data) {
       localStorage.setItem('bakery_products', JSON.stringify(INITIAL_PRODUCTS));
+      syncDocToCloud('products', INITIAL_PRODUCTS);
       return INITIAL_PRODUCTS;
     }
     try {
@@ -160,7 +202,6 @@ export const Store = {
       products = INITIAL_PRODUCTS;
     }
 
-    // Auto-ensure user pictures (Barfi, Biscuits, Gulab Jamun) exist in product list
     let updated = false;
     INITIAL_PRODUCTS.forEach(initP => {
       if (!products.some(p => p.id === initP.id || p.title.toLowerCase() === initP.title.toLowerCase())) {
@@ -171,6 +212,7 @@ export const Store = {
 
     if (updated) {
       localStorage.setItem('bakery_products', JSON.stringify(products));
+      syncDocToCloud('products', products);
     }
 
     return products;
@@ -178,6 +220,7 @@ export const Store = {
 
   saveProducts(products) {
     localStorage.setItem('bakery_products', JSON.stringify(products));
+    syncDocToCloud('products', products);
   },
 
   addProduct(product) {
@@ -219,6 +262,7 @@ export const Store = {
     const data = localStorage.getItem('bakery_orders');
     if (!data) {
       localStorage.setItem('bakery_orders', JSON.stringify(INITIAL_ORDERS));
+      syncDocToCloud('orders', INITIAL_ORDERS);
       return INITIAL_ORDERS;
     }
     try {
@@ -230,6 +274,7 @@ export const Store = {
 
   saveOrders(orders) {
     localStorage.setItem('bakery_orders', JSON.stringify(orders));
+    syncDocToCloud('orders', orders);
   },
 
   addOrder(orderData) {
@@ -246,11 +291,10 @@ export const Store = {
       total: orderData.total,
       paymentMethod: orderData.paymentMethod || "Cash on Delivery",
       paymentStatus: orderData.paymentMethod === "Credit Card" ? "Paid" : "Pending",
-      status: "pending", // pending -> baking -> ready -> delivered
+      status: "pending",
       createdAt: new Date().toISOString()
     };
 
-    // Deduct stock levels for ordered items
     const products = this.getProducts();
     orderData.items.forEach(item => {
       const prod = products.find(p => p.id === item.id);
@@ -284,6 +328,7 @@ export const Store = {
     const data = localStorage.getItem('bakery_discounts');
     if (!data) {
       localStorage.setItem('bakery_discounts', JSON.stringify(INITIAL_DISCOUNTS));
+      syncDocToCloud('discounts', INITIAL_DISCOUNTS);
       return INITIAL_DISCOUNTS;
     }
     try {
@@ -304,6 +349,7 @@ export const Store = {
     };
     discounts.unshift(newDisc);
     localStorage.setItem('bakery_discounts', JSON.stringify(discounts));
+    syncDocToCloud('discounts', discounts);
     return newDisc;
   },
 
@@ -312,6 +358,7 @@ export const Store = {
     const data = localStorage.getItem('bakery_feedbacks');
     if (!data) {
       localStorage.setItem('bakery_feedbacks', JSON.stringify(INITIAL_FEEDBACKS));
+      syncDocToCloud('feedbacks', INITIAL_FEEDBACKS);
       return INITIAL_FEEDBACKS;
     }
     try {
@@ -334,6 +381,7 @@ export const Store = {
     };
     feedbacks.unshift(newFb);
     localStorage.setItem('bakery_feedbacks', JSON.stringify(feedbacks));
+    syncDocToCloud('feedbacks', feedbacks);
     return newFb;
   },
 
@@ -343,6 +391,7 @@ export const Store = {
     if (fb) {
       fb.status = "resolved";
       localStorage.setItem('bakery_feedbacks', JSON.stringify(feedbacks));
+      syncDocToCloud('feedbacks', feedbacks);
     }
   },
 
@@ -352,6 +401,11 @@ export const Store = {
     localStorage.setItem('bakery_orders', JSON.stringify(INITIAL_ORDERS));
     localStorage.setItem('bakery_discounts', JSON.stringify(INITIAL_DISCOUNTS));
     localStorage.setItem('bakery_feedbacks', JSON.stringify(INITIAL_FEEDBACKS));
+
+    syncDocToCloud('products', INITIAL_PRODUCTS);
+    syncDocToCloud('orders', INITIAL_ORDERS);
+    syncDocToCloud('discounts', INITIAL_DISCOUNTS);
+    syncDocToCloud('feedbacks', INITIAL_FEEDBACKS);
   }
 };
 

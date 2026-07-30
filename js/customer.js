@@ -35,6 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
   renderOrderHistory();
   updateCartBadge();
   setupEventListeners();
+
+  // Listen for Cloud Firestore Realtime Sync updates across devices
+  window.addEventListener('cloudStoreUpdated', () => {
+    renderProducts();
+    renderTracker();
+    renderOrderHistory();
+  });
 });
 
 function setupEventListeners() {
