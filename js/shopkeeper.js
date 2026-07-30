@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize UI Views
   renderProductsTable();
   renderOrderQueue();
+  renderShopInfoForm();
   renderSalesReport();
   renderUsersTable();
   renderDiscountsTable();
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('cloudStoreUpdated', () => {
     renderProductsTable();
     renderOrderQueue();
+    renderShopInfoForm();
     renderSalesReport();
     renderStockAlerts();
     renderFeedbacksTable();
@@ -483,6 +485,35 @@ function renderStockAlerts() {
   `;
 }
 
+function renderShopInfoForm() {
+  const info = Store.getShopInfo();
+  if (document.getElementById('infoShopkeeperName')) document.getElementById('infoShopkeeperName').value = info.shopkeeperName || '';
+  if (document.getElementById('infoShopName')) document.getElementById('infoShopName').value = info.shopName || '';
+  if (document.getElementById('infoPhone')) document.getElementById('infoPhone').value = info.phone || '';
+  if (document.getElementById('infoAddress')) document.getElementById('infoAddress').value = info.address || '';
+  if (document.getElementById('infoHours')) document.getElementById('infoHours').value = info.hours || '';
+}
+
+// Attach Form Listener in setupEventListeners
+const origSetupEvents = setupEventListeners;
+setupEventListeners = function() {
+  origSetupEvents();
+  const shopInfoForm = document.getElementById('shopInfoForm');
+  if (shopInfoForm) {
+    shopInfoForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      Store.saveShopInfo({
+        shopkeeperName: document.getElementById('infoShopkeeperName').value.trim(),
+        shopName: document.getElementById('infoShopName').value.trim(),
+        phone: document.getElementById('infoPhone').value.trim(),
+        address: document.getElementById('infoAddress').value.trim(),
+        hours: document.getElementById('infoHours').value.trim()
+      });
+      if (window.Auth && window.Auth.showToast) window.Auth.showToast('Shopkeeper contact details & address updated live!', 'success');
+    });
+  }
+};
+
 window.selectPresetImage = function(imageName, defaultTitle, defaultCategory, defaultPrice) {
   const urlInput = document.getElementById('prodImgUrl');
   const titleInput = document.getElementById('prodTitle');
@@ -502,3 +533,4 @@ window.selectPresetImage = function(imageName, defaultTitle, defaultCategory, de
 
   if (window.Auth && window.Auth.showToast) window.Auth.showToast(`Selected picture: ${imageName}`, 'info');
 };
+

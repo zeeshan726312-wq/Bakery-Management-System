@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('profEmail')) document.getElementById('profEmail').value = user.email;
 
   // Initialize UI
+  renderShopInfoBanner();
   renderProducts();
   renderTracker();
   renderOrderHistory();
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Listen for Cloud Firestore Realtime Sync updates across devices
   window.addEventListener('cloudStoreUpdated', () => {
+    renderShopInfoBanner();
     renderProducts();
     renderTracker();
     renderOrderHistory();
@@ -539,3 +541,13 @@ if (document.getElementById('closeReceiptBtn')) {
     if (modal) modal.classList.remove('active');
   });
 }
+
+function renderShopInfoBanner() {
+  const info = Store.getShopInfo();
+  if (document.getElementById('bannerShopName')) document.getElementById('bannerShopName').textContent = info.shopName || 'LaylPur Bakery Main Branch';
+  if (document.getElementById('bannerAddress')) document.getElementById('bannerAddress').textContent = info.address || 'Clock Tower Plaza, LaylPur';
+  if (document.getElementById('bannerHours')) document.getElementById('bannerHours').textContent = info.hours || '8:00 AM - 10:00 PM';
+  if (document.getElementById('bannerPhone')) document.getElementById('bannerPhone').textContent = info.phone || '+1 (555) 019-9283';
+  if (document.getElementById('bannerBakerName')) document.getElementById('bannerBakerName').textContent = info.shopkeeperName || 'Master Baker';
+}
+

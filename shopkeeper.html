@@ -37,6 +37,7 @@
     <div class="tab-navigation">
       <button class="tab-btn active" data-target="productsTab">🍞 Product Inventory</button>
       <button class="tab-btn" data-target="ordersTab">🛒 Order Queue</button>
+      <button class="tab-btn" data-target="shopInfoTab">🏬 Shop Contact & Info</button>
       <button class="tab-btn" data-target="salesTab">📊 Sales Reports</button>
       <button class="tab-btn" data-target="usersTab">👥 User Management</button>
       <button class="tab-btn" data-target="discountsTab">🏷️ Offers & Promos</button>
@@ -80,6 +81,43 @@
       <div class="dashboard-card">
         <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1rem">Live Customer Orders</h2>
         <div id="shopOrderQueue"></div>
+      </div>
+    </div>
+
+    <!-- 🏬 SHOP INFO & CONTACT TAB -->
+    <div id="shopInfoTab" class="tab-content" style="display:none">
+      <div class="dashboard-card" style="max-width:650px; margin:0 auto">
+        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:0.5rem">Shop Contact & Location Info</h2>
+        <p style="color:var(--text-subtle); font-size:0.85rem; margin-bottom:1.5rem">Update your bakery address, manager name, phone number, and hours. These details are shown live to customers for contacting the shopkeeper.</p>
+
+        <form id="shopInfoForm">
+          <div class="form-group">
+            <label class="form-label">Shopkeeper / Baker Name</label>
+            <input type="text" id="infoShopkeeperName" class="form-input" style="padding-left:1rem" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Bakery Shop Name</label>
+            <input type="text" id="infoShopName" class="form-input" style="padding-left:1rem" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Contact Phone Number (For Customers)</label>
+            <input type="text" id="infoPhone" class="form-input" style="padding-left:1rem" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Bakery Shop Address</label>
+            <textarea id="infoAddress" class="form-input" style="padding-left:1rem; height:80px" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Opening & Closing Hours</label>
+            <input type="text" id="infoHours" class="form-input" style="padding-left:1rem" placeholder="8:00 AM - 10:00 PM Daily" required />
+          </div>
+
+          <button type="submit" class="btn-primary" style="margin-top:1rem">Save Shopkeeper Contact Info</button>
+        </form>
       </div>
     </div>
 

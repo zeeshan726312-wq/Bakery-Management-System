@@ -158,6 +158,16 @@ const INITIAL_RIDERS = [
   { id: "rider-2", name: "Bilal Ahmad", phone: "+1 555-0199", status: "Out for Delivery", totalDeliveries: 28, vehicle: "Scooter" }
 ];
 
+// Initial Shopkeeper Store Info & Contact
+const DEFAULT_SHOP_INFO = {
+  shopkeeperName: "Master Baker",
+  shopName: "LaylPur Bakery Main Branch",
+  phone: "+1 (555) 019-9283",
+  address: "Clock Tower Plaza, Main Bazaar, LaylPur",
+  email: "shopkeeper@laylpurbakery.com",
+  hours: "8:00 AM - 10:00 PM Daily"
+};
+
 // Setup Realtime Cloud Sync via Cloud Firestore
 let isCloudSynced = false;
 
@@ -171,13 +181,13 @@ async function syncDocToCloud(docName, data) {
 
 // Subscribe to Realtime Cloud Updates from Firestore
 function initRealtimeCloudSync() {
-  const collections = ['products', 'orders', 'discounts', 'feedbacks', 'shops', 'riders'];
+  const collections = ['products', 'orders', 'discounts', 'feedbacks', 'shops', 'riders', 'shop_info'];
   
   collections.forEach(col => {
     onSnapshot(doc(db, "laylpur_store", col), (docSnap) => {
       if (docSnap.exists()) {
         const cloudData = docSnap.data().data;
-        if (cloudData && Array.isArray(cloudData)) {
+        if (cloudData) {
           localStorage.setItem(`bakery_${col}`, JSON.stringify(cloudData));
           isCloudSynced = true;
           window.dispatchEvent(new CustomEvent('cloudStoreUpdated', { detail: { collection: col } }));
@@ -197,6 +207,28 @@ try {
 
 // Central Store Module
 export const Store = {
+  // SHOP INFO & CONTACT
+  getShopInfo() {
+    const data = localStorage.getItem('bakery_shop_info');
+    if (!data) {
+      localStorage.setItem('bakery_shop_info', JSON.stringify(DEFAULT_SHOP_INFO));
+      syncDocToCloud('shop_info', DEFAULT_SHOP_INFO);
+      return DEFAULT_SHOP_INFO;
+    }
+    try {
+      return JSON.parse(data);
+    } catch {
+      return DEFAULT_SHOP_INFO;
+    }
+  },
+
+  saveShopInfo(info) {
+    const updated = { ...this.getShopInfo(), ...info };
+    localStorage.setItem('bakery_shop_info', JSON.stringify(updated));
+    syncDocToCloud('shop_info', updated);
+    return updated;
+  },
+
   // PRODUCTS
   getProducts() {
     let products = [];
@@ -488,6 +520,7 @@ export const Store = {
     localStorage.setItem('bakery_feedbacks', JSON.stringify(INITIAL_FEEDBACKS));
     localStorage.setItem('bakery_shops', JSON.stringify(INITIAL_SHOPS));
     localStorage.setItem('bakery_riders', JSON.stringify(INITIAL_RIDERS));
+    localStorage.setItem('bakery_shop_info', JSON.stringify(DEFAULT_SHOP_INFO));
 
     syncDocToCloud('products', INITIAL_PRODUCTS);
     syncDocToCloud('orders', INITIAL_ORDERS);
@@ -495,6 +528,7 @@ export const Store = {
     syncDocToCloud('feedbacks', INITIAL_FEEDBACKS);
     syncDocToCloud('shops', INITIAL_SHOPS);
     syncDocToCloud('riders', INITIAL_RIDERS);
+    syncDocToCloud('shop_info', DEFAULT_SHOP_INFO);
   }
 };
 
