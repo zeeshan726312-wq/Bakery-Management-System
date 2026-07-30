@@ -133,19 +133,24 @@ function showToast(message, type = 'info') {
 function quickFillLogin(role) {
   const emailInput = document.getElementById('email');
   const passInput = document.getElementById('password');
+  const roleCustRadio = document.getElementById('roleCustomer');
+  const roleShopRadio = document.getElementById('roleShopkeeper');
   
-  if (role === 'admin') {
-    if (emailInput) emailInput.value = 'admin@laylpurbakery.com';
-    if (passInput) passInput.value = 'password123';
-  } else if (role === 'shopkeeper') {
+  if (role === 'shopkeeper') {
     if (emailInput) emailInput.value = 'shopkeeper@laylpurbakery.com';
     if (passInput) passInput.value = 'password123';
+    if (roleShopRadio) roleShopRadio.checked = true;
   } else if (role === 'customer') {
     if (emailInput) emailInput.value = 'customer@laylpurbakery.com';
     if (passInput) passInput.value = 'password123';
+    if (roleCustRadio) roleCustRadio.checked = true;
+  } else if (role === 'admin') {
+    if (emailInput) emailInput.value = 'shopkeeper@laylpurbakery.com';
+    if (passInput) passInput.value = 'password123';
+    if (roleShopRadio) roleShopRadio.checked = true;
   }
 
-  showToast(`Auto-filled ${role.toUpperCase()} credentials! Click "Sign In" button below.`, 'success');
+  showToast(`Selected ${role.toUpperCase()} role! Click "Sign In" button below.`, 'success');
 }
 
 // DOM Event Listeners

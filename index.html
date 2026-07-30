@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LaylPur Bakery - Sign In</title>
-  <meta name="description" content="Sign in to LaylPur Bakery Management System with role-based access for Admin, Shopkeeper, and Customer." />
+  <meta name="description" content="Sign in to LaylPur Bakery Management System with role-based access for Shopkeeper and Customer." />
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,15 +23,37 @@
       <div class="brand-header">
         <div class="brand-icon">🥐</div>
         <h1 class="brand-title font-serif-title">LaylPur Bakery</h1>
-        <p class="brand-subtitle">Sign in to manage inventory, orders & purchases</p>
+        <p class="brand-subtitle">Select your role to sign in to your dashboard</p>
       </div>
 
       <form id="loginForm" novalidate>
+        <!-- Sign In Role Selector Cards -->
+        <div class="form-group">
+          <label class="form-label">Sign In As</label>
+          <div class="role-selector">
+            <label class="role-card">
+              <input type="radio" name="loginRole" id="roleCustomer" value="customer" checked onclick="window.quickFillLogin('customer')" />
+              <div class="role-card-inner">
+                <span class="role-icon">🛍️</span>
+                <span class="role-name">Customer</span>
+              </div>
+            </label>
+
+            <label class="role-card">
+              <input type="radio" name="loginRole" id="roleShopkeeper" value="shopkeeper" onclick="window.quickFillLogin('shopkeeper')" />
+              <div class="role-card-inner">
+                <span class="role-icon">🍞</span>
+                <span class="role-name">Shopkeeper</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
         <!-- Email Input -->
         <div class="form-group">
           <label for="email" class="form-label">Email Address</label>
           <div class="input-container">
-            <input type="email" id="email" class="form-input" placeholder="admin@laylpurbakery.com" required autocomplete="email" />
+            <input type="email" id="email" class="form-input" placeholder="customer@laylpurbakery.com" required autocomplete="email" />
             <span class="input-icon">✉️</span>
           </div>
         </div>
@@ -58,7 +80,7 @@
 
       <!-- Quick Demo Accounts -->
       <div class="demo-pill-section">
-        <div class="demo-title">⚡ Quick Demo Login (Click to Auto-fill)</div>
+        <div class="demo-title">⚡ Quick Demo Login</div>
         <div class="demo-pills">
           <button type="button" class="demo-pill" onclick="window.quickFillLogin('shopkeeper')">
             <span>🍞 Shopkeeper Portal</span>
