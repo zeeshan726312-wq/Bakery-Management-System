@@ -133,10 +133,15 @@ function showToast(message, type = 'info') {
 function quickFillLogin(role) {
   const emailInput = document.getElementById('email');
   const passInput = document.getElementById('password');
-  const roleCustRadio = document.getElementById('roleCustomer');
+  const roleAdminRadio = document.getElementById('roleAdmin');
   const roleShopRadio = document.getElementById('roleShopkeeper');
+  const roleCustRadio = document.getElementById('roleCustomer');
   
-  if (role === 'shopkeeper') {
+  if (role === 'admin') {
+    if (emailInput) emailInput.value = 'admin@laylpurbakery.com';
+    if (passInput) passInput.value = 'password123';
+    if (roleAdminRadio) roleAdminRadio.checked = true;
+  } else if (role === 'shopkeeper') {
     if (emailInput) emailInput.value = 'shopkeeper@laylpurbakery.com';
     if (passInput) passInput.value = 'password123';
     if (roleShopRadio) roleShopRadio.checked = true;
@@ -144,10 +149,6 @@ function quickFillLogin(role) {
     if (emailInput) emailInput.value = 'customer@laylpurbakery.com';
     if (passInput) passInput.value = 'password123';
     if (roleCustRadio) roleCustRadio.checked = true;
-  } else if (role === 'admin') {
-    if (emailInput) emailInput.value = 'shopkeeper@laylpurbakery.com';
-    if (passInput) passInput.value = 'password123';
-    if (roleShopRadio) roleShopRadio.checked = true;
   }
 
   showToast(`Selected ${role.toUpperCase()} role! Click "Sign In" button below.`, 'success');

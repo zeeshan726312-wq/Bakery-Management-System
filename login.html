@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LaylPur Bakery - Sign In</title>
-  <meta name="description" content="Sign in to LaylPur Bakery Management System with role-based access for Shopkeeper and Customer." />
+  <meta name="description" content="Sign in to LaylPur Bakery Management System with role-based access for Super Admin, Shopkeeper, and Customer." />
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,10 +32,10 @@
           <label class="form-label">Sign In As</label>
           <div class="role-selector">
             <label class="role-card">
-              <input type="radio" name="loginRole" id="roleCustomer" value="customer" checked onclick="window.quickFillLogin('customer')" />
+              <input type="radio" name="loginRole" id="roleAdmin" value="admin" onclick="window.quickFillLogin('admin')" />
               <div class="role-card-inner">
-                <span class="role-icon">🛍️</span>
-                <span class="role-name">Customer</span>
+                <span class="role-icon">👑</span>
+                <span class="role-name">Admin</span>
               </div>
             </label>
 
@@ -44,6 +44,14 @@
               <div class="role-card-inner">
                 <span class="role-icon">🍞</span>
                 <span class="role-name">Shopkeeper</span>
+              </div>
+            </label>
+
+            <label class="role-card">
+              <input type="radio" name="loginRole" id="roleCustomer" value="customer" checked onclick="window.quickFillLogin('customer')" />
+              <div class="role-card-inner">
+                <span class="role-icon">🛍️</span>
+                <span class="role-name">Customer</span>
               </div>
             </label>
           </div>
@@ -97,7 +105,7 @@
       <!-- Register Link -->
       <div style="text-align:center; margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-subtle)">
         Don't have an account? 
-        <a href="register.html" style="color: var(--amber-primary); font-weight:700; text-decoration:none; margin-left: 0.25rem;">Create Account</a>
+        <a href="register.html" style="color: var(--amber-primary); font-weight:700; text-decoration:none; margin-left: 0.25rem;">Create Customer Account</a>
       </div>
     </div>
   </div>
