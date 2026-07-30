@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LaylPur Bakery - Create Account</title>
-  <meta name="description" content="Register an account for LaylPur Bakery Management System as Customer, Shopkeeper, or Admin." />
+  <title>LaylPur Bakery - Customer Registration</title>
+  <meta name="description" content="Create a customer account for LaylPur Bakery Management System." />
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,17 +21,19 @@
   <div class="auth-wrapper">
     <div class="auth-card">
       <div class="brand-header">
-        <div class="brand-icon">🥐</div>
-        <h1 class="brand-title font-serif-title">LaylPur Bakery</h1>
-        <p class="brand-subtitle">Join the LaylPur Bakery Management platform</p>
+        <div class="brand-icon">🛍️</div>
+        <h1 class="brand-title font-serif-title">Create Account</h1>
+        <p class="brand-subtitle">Join LaylPur Bakery as a Customer to order fresh bakes</p>
       </div>
 
       <form id="registerForm" novalidate>
+        <input type="hidden" id="role" name="role" value="customer" />
+
         <!-- Full Name -->
         <div class="form-group">
           <label for="name" class="form-label">Full Name</label>
           <div class="input-container">
-            <input type="text" id="name" class="form-input" placeholder="e.g. Eleanor Vance" required />
+            <input type="text" id="name" class="form-input" placeholder="e.g. John Doe" required autocomplete="name" />
             <span class="input-icon">👤</span>
           </div>
         </div>
@@ -42,28 +44,6 @@
           <div class="input-container">
             <input type="email" id="email" class="form-input" placeholder="name@laylpurbakery.com" required autocomplete="email" />
             <span class="input-icon">✉️</span>
-          </div>
-        </div>
-
-        <!-- Role Selector Cards -->
-        <div class="form-group">
-          <label class="form-label">Select Account Role</label>
-          <div class="role-selector">
-            <label class="role-card">
-              <input type="radio" name="role" value="customer" checked />
-              <div class="role-card-inner">
-                <span class="role-icon">🛍️</span>
-                <span class="role-name">Customer</span>
-              </div>
-            </label>
-
-            <label class="role-card">
-              <input type="radio" name="role" value="shopkeeper" />
-              <div class="role-card-inner">
-                <span class="role-icon">🍞</span>
-                <span class="role-name">Shopkeeper</span>
-              </div>
-            </label>
           </div>
         </div>
 
@@ -84,20 +64,20 @@
         <div class="form-group">
           <label for="confirmPassword" class="form-label">Confirm Password</label>
           <div class="input-container">
-            <input type="password" id="confirmPassword" class="form-input" placeholder="Re-enter password" required />
+            <input type="password" id="confirmPassword" class="form-input" placeholder="Repeat your password" required />
             <span class="input-icon">🔒</span>
             <button type="button" class="toggle-password" data-target="confirmPassword" title="Toggle password visibility">👁️</button>
           </div>
         </div>
 
-        <!-- Register Button -->
-        <button type="submit" class="btn-primary">
-          <span>Register Account</span>
+        <!-- Submit Button -->
+        <button type="submit" class="btn-primary" style="margin-top: 1rem">
+          <span>Create Customer Account</span>
           <span>→</span>
         </button>
       </form>
 
-      <!-- Back to Login Link -->
+      <!-- Sign In Link -->
       <div style="text-align:center; margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-subtle)">
         Already have an account? 
         <a href="login.html" style="color: var(--amber-primary); font-weight:700; text-decoration:none; margin-left: 0.25rem;">Sign In</a>
