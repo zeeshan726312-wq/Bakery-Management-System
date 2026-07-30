@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bakery Management System</title>
+  <meta name="description" content="Premium Bakery Management System – manage customers, products, orders, suppliers, and deliveries." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <!-- Mobile Toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🍞</div>
+      <span class="brand-text">Bakery Manager</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <a href="#dashboard" class="nav-item active">
+        <span class="nav-icon">🏠</span> Dashboard
+      </a>
+      <a href="#customers" class="nav-item">
+        <span class="nav-icon">👥</span> Customers
+      </a>
+      <a href="#products" class="nav-item">
+        <span class="nav-icon">🧁</span> Products
+      </a>
+
+      <span class="nav-section-label">Sales</span>
+      <a href="#orders" class="nav-item">
+        <span class="nav-icon">📦</span> Orders
+      </a>
+      <a href="#confirm-order" class="nav-item">
+        <span class="nav-icon">✅</span> Confirm Order
+      </a>
+      <a href="#delivery" class="nav-item">
+        <span class="nav-icon">🚚</span> Deliveries
+      </a>
+
+      <span class="nav-section-label">Supply Chain</span>
+      <a href="#suppliers" class="nav-item">
+        <span class="nav-icon">🏭</span> Suppliers
+      </a>
+      <a href="#supply-orders" class="nav-item">
+        <span class="nav-icon">📋</span> Supply Orders
+      </a>
+
+      <span class="nav-section-label">System</span>
+      <a href="#settings" class="nav-item">
+        <span class="nav-icon">⚙️</span> Settings
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="theme-selector">
+        <label for="themeSelect">Color Theme</label>
+        <select id="themeSelect">
+          <option value="default">🟠 Bakery Warm</option>
+          <option value="blue">🔵 Ocean Blue</option>
+          <option value="purple">🟣 Royal Purple</option>
+          <option value="teal">🟢 Fresh Teal</option>
+          <option value="rose">🌹 Elegant Rose</option>
+        </select>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content" id="app">
+    <!-- Page content rendered here by router -->
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

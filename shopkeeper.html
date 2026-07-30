@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bakery Management System - Shopkeeper Dashboard</title>
+  <meta name="description" content="Shopkeeper dashboard for Bakery Management System.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'media' };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>body {font-family: 'Inter', sans-serif;}</style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex flex-col">
+  <header class="bg-indigo-600 text-white p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-semibold">Shopkeeper Dashboard</h1>
+      <button onclick="logout()" class="bg-indigo-800 hover:bg-indigo-700 px-3 py-1 rounded">Logout</button>
+    </div>
+  </header>
+  <main class="flex-grow container mx-auto p-8">
+    <section class="glassmorphism p-6 rounded-lg">
+      <h2 class="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4">Welcome, <span id="userName"></span>!</h2>
+      <p class="text-gray-700 dark:text-gray-300">Here you can manage your bakery shop inventory, orders, and sales.</p>
+      <!-- Placeholder for future shopkeeper features -->
+    </section>
+  </main>
+  <footer class="bg-gray-200 dark:bg-gray-800 text-center p-4">
+    <small class="text-gray-600 dark:text-gray-400">© 2026 Bakery Management System</small>
+  </footer>
+  <script src="js/auth.js"></script>
+  <script>
+    const user = getCurrentUser();
+    if (!user || user.role !== 'shopkeeper') {
+      window.location.href = 'login.html';
+    } else {
+      document.getElementById('userName').textContent = user.name;
+    }
+  </script>
+</body>
+</html>
