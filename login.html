@@ -3,39 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bakery Management System - Login</title>
-  <meta name="description" content="Login page for Bakery Management System with Admin, Shopkeeper, and Customer roles.">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Enable dark mode based on prefers-color-scheme
-    tailwind.config = {
-      darkMode: 'media',
-    };
-  </script>
+  <title>LaylPur Bakery - Sign In</title>
+  <meta name="description" content="Sign in to LaylPur Bakery Management System with role-based access for Admin, Shopkeeper, and Customer." />
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen">
-  <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 w-full max-w-md glassmorphism">
-    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 text-center">Login</h1>
-    <form id="loginForm" class="space-y-4">
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Email</label>
-        <input type="email" id="email" required class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-      </div>
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Password</label>
-        <input type="password" id="password" required class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-      </div>
-      <div class="flex items-center justify-between">
-        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md transition-colors">Sign In</button>
-        <a href="register.html" class="text-indigo-600 hover:underline text-sm">Create account</a>
-      </div>
-    </form>
+<body>
+  <!-- Ambient Glow Background -->
+  <div class="bg-glow-container">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
   </div>
-  <script src="js/auth.js"></script>
+
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="brand-header">
+        <div class="brand-icon">🥐</div>
+        <h1 class="brand-title font-serif-title">LaylPur Bakery</h1>
+        <p class="brand-subtitle">Sign in to manage inventory, orders & purchases</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <!-- Email Input -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <div class="input-container">
+            <input type="email" id="email" class="form-input" placeholder="admin@laylpurbakery.com" required autocomplete="email" />
+            <span class="input-icon">✉️</span>
+          </div>
+        </div>
+
+        <!-- Password Input -->
+        <div class="form-group">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <label for="password" class="form-label">Password</label>
+            <span style="font-size:0.75rem; color:var(--amber-primary)">Default: password123</span>
+          </div>
+          <div class="input-container">
+            <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password" />
+            <span class="input-icon">🔒</span>
+            <button type="button" class="toggle-password" data-target="password" title="Toggle password visibility">👁️</button>
+          </div>
+        </div>
+
+        <!-- Sign In Button -->
+        <button type="submit" class="btn-primary">
+          <span>Sign In</span>
+          <span>→</span>
+        </button>
+      </form>
+
+      <!-- Quick Demo Accounts -->
+      <div class="demo-pill-section">
+        <div class="demo-title">⚡ Quick Demo Login (Click to Auto-fill)</div>
+        <div class="demo-pills">
+          <button type="button" class="demo-pill" onclick="window.quickFillLogin('shopkeeper')">
+            <span>🍞 Shopkeeper Portal</span>
+          </button>
+          <button type="button" class="demo-pill" onclick="window.quickFillLogin('customer')">
+            <span>🛍️ Customer Lounge</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Register Link -->
+      <div style="text-align:center; margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-subtle)">
+        Don't have an account? 
+        <a href="register.html" style="color: var(--amber-primary); font-weight:700; text-decoration:none; margin-left: 0.25rem;">Create Account</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>

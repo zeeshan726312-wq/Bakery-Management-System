@@ -1,15 +1,22 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
-  // Serve from the src folder where index.html lives
-  root: 'src',
+  root: '.',
   server: {
-    open: true, // open browser automatically
     port: 5173,
+    open: false,
   },
   build: {
-    outDir: '../dist', // output one level up from src
-    // Ensure assets are placed correctly
-    assetsDir: 'assets',
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        login: resolve(__dirname, 'login.html'),
+        register: resolve(__dirname, 'register.html'),
+        shopkeeper: resolve(__dirname, 'shopkeeper.html'),
+        customer: resolve(__dirname, 'customer.html'),
+      },
+    },
   },
 });
