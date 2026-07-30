@@ -146,6 +146,18 @@ const INITIAL_FEEDBACKS = [
   }
 ];
 
+// Initial Seed Shop Branches
+const INITIAL_SHOPS = [
+  { id: "shop-1", name: "LaylPur Main Branch", location: "Clock Tower Plaza, LaylPur", manager: "Master Baker", phone: "+1 555-0100", status: "Active", createdAt: "2026-01-10" },
+  { id: "shop-2", name: "LaylPur Mall Road Branch", location: "Mall Road Sector 4, LaylPur", manager: "Hamza Baker", phone: "+1 555-0200", status: "Active", createdAt: "2026-03-15" }
+];
+
+// Initial Seed Delivery Riders
+const INITIAL_RIDERS = [
+  { id: "rider-1", name: "Tariq Mahmood", phone: "+1 555-0188", status: "Available", totalDeliveries: 42, vehicle: "Motorbike" },
+  { id: "rider-2", name: "Bilal Ahmad", phone: "+1 555-0199", status: "Out for Delivery", totalDeliveries: 28, vehicle: "Scooter" }
+];
+
 // Setup Realtime Cloud Sync via Cloud Firestore
 let isCloudSynced = false;
 
@@ -159,7 +171,7 @@ async function syncDocToCloud(docName, data) {
 
 // Subscribe to Realtime Cloud Updates from Firestore
 function initRealtimeCloudSync() {
-  const collections = ['products', 'orders', 'discounts', 'feedbacks'];
+  const collections = ['products', 'orders', 'discounts', 'feedbacks', 'shops', 'riders'];
   
   collections.forEach(col => {
     onSnapshot(doc(db, "laylpur_store", col), (docSnap) => {
@@ -168,7 +180,6 @@ function initRealtimeCloudSync() {
         if (cloudData && Array.isArray(cloudData)) {
           localStorage.setItem(`bakery_${col}`, JSON.stringify(cloudData));
           isCloudSynced = true;
-          // Dispatch custom event to notify active views to refresh
           window.dispatchEvent(new CustomEvent('cloudStoreUpdated', { detail: { collection: col } }));
         }
       }
@@ -178,7 +189,6 @@ function initRealtimeCloudSync() {
   });
 }
 
-// Initialize Cloud Listeners immediately
 try {
   initRealtimeCloudSync();
 } catch (e) {
@@ -323,6 +333,81 @@ export const Store = {
     return null;
   },
 
+  // SHOPS
+  getShops() {
+    const data = localStorage.getItem('bakery_shops');
+    if (!data) {
+      localStorage.setItem('bakery_shops', JSON.stringify(INITIAL_SHOPS));
+      syncDocToCloud('shops', INITIAL_SHOPS);
+      return INITIAL_SHOPS;
+    }
+    try {
+      return JSON.parse(data);
+    } catch {
+      return INITIAL_SHOPS;
+    }
+  },
+
+  addShop(shop) {
+    const shops = this.getShops();
+    const newShop = {
+      id: "shop-" + Date.now(),
+      name: shop.name || "LaylPur New Branch",
+      location: shop.location || "LaylPur City",
+      manager: shop.manager || "Branch Manager",
+      phone: shop.phone || "+1 555-0000",
+      status: "Active",
+      createdAt: new Date().toISOString().split('T')[0]
+    };
+    shops.unshift(newShop);
+    localStorage.setItem('bakery_shops', JSON.stringify(shops));
+    syncDocToCloud('shops', shops);
+    return newShop;
+  },
+
+  deleteShop(id) {
+    const shops = this.getShops().filter(s => s.id !== id);
+    localStorage.setItem('bakery_shops', JSON.stringify(shops));
+    syncDocToCloud('shops', shops);
+  },
+
+  // RIDERS
+  getRiders() {
+    const data = localStorage.getItem('bakery_riders');
+    if (!data) {
+      localStorage.setItem('bakery_riders', JSON.stringify(INITIAL_RIDERS));
+      syncDocToCloud('riders', INITIAL_RIDERS);
+      return INITIAL_RIDERS;
+    }
+    try {
+      return JSON.parse(data);
+    } catch {
+      return INITIAL_RIDERS;
+    }
+  },
+
+  addRider(rider) {
+    const riders = this.getRiders();
+    const newRider = {
+      id: "rider-" + Date.now(),
+      name: rider.name || "Delivery Rider",
+      phone: rider.phone || "+1 555-0000",
+      vehicle: rider.vehicle || "Motorbike",
+      status: "Available",
+      totalDeliveries: 0
+    };
+    riders.unshift(newRider);
+    localStorage.setItem('bakery_riders', JSON.stringify(riders));
+    syncDocToCloud('riders', riders);
+    return newRider;
+  },
+
+  deleteRider(id) {
+    const riders = this.getRiders().filter(r => r.id !== id);
+    localStorage.setItem('bakery_riders', JSON.stringify(riders));
+    syncDocToCloud('riders', riders);
+  },
+
   // DISCOUNTS
   getDiscounts() {
     const data = localStorage.getItem('bakery_discounts');
@@ -401,11 +486,15 @@ export const Store = {
     localStorage.setItem('bakery_orders', JSON.stringify(INITIAL_ORDERS));
     localStorage.setItem('bakery_discounts', JSON.stringify(INITIAL_DISCOUNTS));
     localStorage.setItem('bakery_feedbacks', JSON.stringify(INITIAL_FEEDBACKS));
+    localStorage.setItem('bakery_shops', JSON.stringify(INITIAL_SHOPS));
+    localStorage.setItem('bakery_riders', JSON.stringify(INITIAL_RIDERS));
 
     syncDocToCloud('products', INITIAL_PRODUCTS);
     syncDocToCloud('orders', INITIAL_ORDERS);
     syncDocToCloud('discounts', INITIAL_DISCOUNTS);
     syncDocToCloud('feedbacks', INITIAL_FEEDBACKS);
+    syncDocToCloud('shops', INITIAL_SHOPS);
+    syncDocToCloud('riders', INITIAL_RIDERS);
   }
 };
 

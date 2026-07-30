@@ -16,6 +16,7 @@ export default defineConfig({
         register: resolve(__dirname, 'register.html'),
         shopkeeper: resolve(__dirname, 'shopkeeper.html'),
         customer: resolve(__dirname, 'customer.html'),
+        admin: resolve(__dirname, 'admin.html'),
       },
     },
   },

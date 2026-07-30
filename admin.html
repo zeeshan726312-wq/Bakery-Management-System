@@ -2,12 +2,227 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=shopkeeper.html" />
-  <title>Redirecting to Shopkeeper Portal - LaylPur Bakery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Admin Console - LaylPur Bakery</title>
+  <meta name="description" content="Super Admin portal for LaylPur Bakery to track daily earnings, riders, products, and add new shop branches." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <script>
-    window.location.href = 'shopkeeper.html';
-  </script>
+  <!-- Ambient Glow Background -->
+  <div class="bg-glow-container">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+  </div>
+
+  <header class="dashboard-header">
+    <div style="display:flex; align-items:center; gap:0.75rem">
+      <div class="brand-icon" style="width:40px; height:40px; font-size:1.2rem; margin:0">👑</div>
+      <div>
+        <h2 style="font-size:1.1rem; font-weight:700" class="font-serif-title">LaylPur Bakery</h2>
+        <span class="role-badge badge-admin">👑 Super Admin Console</span>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:1rem">
+      <span style="font-size:0.85rem; color:var(--text-muted)">Hi, <strong id="userNameHeader">Super Admin</strong></span>
+      <button onclick="window.logout()" class="btn-logout">Sign Out</button>
+    </div>
+  </header>
+
+  <main style="flex:1; max-width:1150px; width:100%; margin:2rem auto; padding:0 1rem; position:relative; z-index:1">
+    
+    <!-- Navigation Tabs -->
+    <div class="tab-navigation">
+      <button class="tab-btn active" data-target="earningsTab">💰 Daily Earnings</button>
+      <button class="tab-btn" data-target="shopsTab">🏪 Shop Branches</button>
+      <button class="tab-btn" data-target="ridersTab">🚴 Delivery Riders</button>
+      <button class="tab-btn" data-target="productsTab">🥐 Master Products</button>
+    </div>
+
+    <!-- 💰 DAILY EARNINGS & FINANCIALS TAB -->
+    <div id="earningsTab" class="tab-content" style="display:block">
+      <div class="dashboard-card">
+        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1.5rem">Daily & Total Revenue Earnings</h2>
+        <div id="adminEarningsSummary" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-bottom:1.5rem"></div>
+
+        <h3 class="font-serif-title" style="font-size:1.2rem; margin-bottom:1rem">Recent Transactions & Daily Sales Log</h3>
+        <div class="table-wrapper">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Payment Method</th>
+                <th>Order Total</th>
+                <th>Status</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="adminEarningsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🏪 SHOPS TAB -->
+    <div id="shopsTab" class="tab-content" style="display:none">
+      <div class="dashboard-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem">
+          <div>
+            <h2 class="font-serif-title" style="font-size:1.5rem">Bakery Shop Branches</h2>
+            <p style="color:var(--text-subtle); font-size:0.85rem">Manage active bakery branches and add new shop locations.</p>
+          </div>
+          <button id="openAddShopBtn" class="btn-primary" style="padding:0.6rem 1.2rem; font-size:0.9rem">+ Add New Bakery Shop</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Shop Name</th>
+                <th>Branch Location</th>
+                <th>Branch Manager</th>
+                <th>Contact Phone</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminShopsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🚴 RIDERS TAB -->
+    <div id="ridersTab" class="tab-content" style="display:none">
+      <div class="dashboard-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem">
+          <div>
+            <h2 class="font-serif-title" style="font-size:1.5rem">Delivery Riders Fleet</h2>
+            <p style="color:var(--text-subtle); font-size:0.85rem">Manage delivery riders and track active delivery statuses.</p>
+          </div>
+          <button id="openAddRiderBtn" class="btn-primary" style="padding:0.6rem 1.2rem; font-size:0.9rem">+ Add New Rider</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Rider Name</th>
+                <th>Contact Phone</th>
+                <th>Vehicle Type</th>
+                <th>Status</th>
+                <th>Total Deliveries</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminRidersTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🥐 PRODUCTS TAB -->
+    <div id="productsTab" class="tab-content" style="display:none">
+      <div class="dashboard-card">
+        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1rem">Master Products & Inventory Oversight</h2>
+        <div class="table-wrapper">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="adminProductsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ➕ ADD SHOP MODAL -->
+  <div id="addShopModal" class="modal-overlay">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem">
+        <h3 class="font-serif-title" style="font-size:1.4rem">Add New Bakery Shop Branch</h3>
+        <button id="closeAddShopBtn" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer">&times;</button>
+      </div>
+
+      <form id="addShopForm">
+        <div class="form-group">
+          <label class="form-label">Shop / Branch Name</label>
+          <input type="text" id="shopName" class="form-input" style="padding-left:1rem" placeholder="e.g. LaylPur Mall Road Branch" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Branch Location / Address</label>
+          <input type="text" id="shopLocation" class="form-input" style="padding-left:1rem" placeholder="e.g. Mall Road Sector 4, LaylPur" required />
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
+          <div class="form-group">
+            <label class="form-label">Branch Manager Name</label>
+            <input type="text" id="shopManager" class="form-input" style="padding-left:1rem" placeholder="Master Baker" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Contact Phone</label>
+            <input type="text" id="shopPhone" class="form-input" style="padding-left:1rem" placeholder="+1 555-0199" required />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top:0.5rem">Create Shop Branch</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ➕ ADD RIDER MODAL -->
+  <div id="addRiderModal" class="modal-overlay">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem">
+        <h3 class="font-serif-title" style="font-size:1.4rem">Add New Delivery Rider</h3>
+        <button id="closeAddRiderBtn" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer">&times;</button>
+      </div>
+
+      <form id="addRiderForm">
+        <div class="form-group">
+          <label class="form-label">Rider Full Name</label>
+          <input type="text" id="riderName" class="form-input" style="padding-left:1rem" placeholder="e.g. Tariq Mahmood" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Contact Phone Number</label>
+          <input type="text" id="riderPhone" class="form-input" style="padding-left:1rem" placeholder="+1 555-0188" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Vehicle Type</label>
+          <select id="riderVehicle" class="form-input" style="padding-left:1rem; background:#372115" required>
+            <option value="Motorbike">🏍️ Motorbike</option>
+            <option value="Scooter">🛵 Scooter</option>
+            <option value="Bicycle">🚲 Bicycle</option>
+            <option value="Car">🚗 Delivery Van / Car</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top:0.5rem">Register Rider</button>
+      </form>
+    </div>
+  </div>
+
+  <footer style="text-align:center; padding:1.5rem; color:var(--text-subtle); font-size:0.8rem">
+    © 2026 LaylPur Bakery Super Admin Console.
+  </footer>
+
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/admin.js"></script>
 </body>
 </html>

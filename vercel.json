@@ -8,6 +8,6 @@
     { "source": "/register", "destination": "/register.html" },
     { "source": "/shopkeeper", "destination": "/shopkeeper.html" },
     { "source": "/customer", "destination": "/customer.html" },
-    { "source": "/admin", "destination": "/shopkeeper.html" }
+    { "source": "/admin", "destination": "/admin.html" }
   ]
 }
