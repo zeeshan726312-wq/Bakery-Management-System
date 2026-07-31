@@ -1,4 +1,4 @@
-// js/shopkeeper.js - Master Shopkeeper Control Panel Logic for LaylPur Bakery
+// js/shopkeeper.js - Master Shopkeeper Control Panel Logic for Lyallpur Bakers
 import { Store } from './store.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!user || (user.role !== 'shopkeeper' && user.role !== 'admin')) {
     user = {
       name: "Master Baker",
-      email: "shopkeeper@laylpurbakery.com",
+      email: "shopkeeper@lyallpurbakers.com",
       role: "shopkeeper"
     };
     if (window.Auth && window.Auth.setCurrentUser) {
@@ -124,7 +124,7 @@ function setupEventListeners() {
         image
       });
 
-      if (window.Auth && window.Auth.showToast) window.Auth.showToast(`Product "${title}" published! Visible to customers now.`, 'success');
+      if (window.Auth && window.Auth.showToast) window.Auth.showToast(`Product "${title}" published! Visible in shop catalog now.`, 'success');
       addProductForm.reset();
       if (imgPreview) imgPreview.style.display = 'none';
       if (addProductModal) addProductModal.classList.remove('active');
@@ -208,7 +208,7 @@ function setupEventListeners() {
       const jsonStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", jsonStr);
-      downloadAnchor.setAttribute("download", `laylpur_bakery_backup_${new Date().toISOString().split('T')[0]}.json`);
+      downloadAnchor.setAttribute("download", `lyallpur_bakers_backup_${new Date().toISOString().split('T')[0]}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
@@ -232,10 +232,10 @@ function renderProductsTable() {
   table.innerHTML = products.map(p => `
     <tr>
       <td>
-        <img src="${p.image}" alt="${p.title}" style="width:45px; height:45px; border-radius:8px; object-fit:cover" onerror="this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80'" />
+        <img src="${p.image}" alt="${p.title}" style="width:48px; height:48px; border-radius:8px; object-fit:cover; border:1px solid var(--glass-border)" onerror="this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80'" />
       </td>
       <td><strong>${p.title}</strong></td>
-      <td><span class="product-tag" style="position:static">${p.category}</span></td>
+      <td><span class="product-ribbon" style="position:static; display:inline-block">${p.category}</span></td>
       <td>$${p.price.toFixed(2)}</td>
       <td>
         <span style="font-weight:700; color:${p.stock < 10 ? '#ef4444' : '#10b981'}">${p.stock} units</span>
@@ -276,7 +276,7 @@ function renderOrderQueue() {
   const orders = Store.getOrders();
 
   if (orders.length === 0) {
-    container.innerHTML = `<div style="text-align:center; padding:2rem; color:var(--text-subtle)">No customer orders in queue right now.</div>`;
+    container.innerHTML = `<div style="text-align:center; padding:2.5rem; color:var(--text-subtle)">No customer orders in queue right now.</div>`;
     return;
   }
 
@@ -294,20 +294,20 @@ function renderOrderQueue() {
         📍 <strong>Delivery Address:</strong> ${o.address} | 💳 <strong>Payment:</strong> ${o.paymentMethod} ($${o.total.toFixed(2)})
       </div>
 
-      <div style="background:rgba(0,0,0,0.2); padding:0.75rem; border-radius:8px; margin-bottom:0.75rem">
-        ${o.items.map(i => `<div style="font-size:0.85rem">${i.qty}x ${i.title} - $${(i.price * i.qty).toFixed(2)}</div>`).join('')}
+      <div style="background:rgba(0,0,0,0.3); padding:0.75rem; border-radius:8px; margin-bottom:0.75rem">
+        ${o.items.map(i => `<div style="font-size:0.85rem; color:var(--amber-light)">${i.qty}x ${i.title} - $${(i.price * i.qty).toFixed(2)}</div>`).join('')}
       </div>
 
       <div style="display:flex; gap:0.5rem; flex-wrap:wrap">
         ${o.status === 'pending' ? `
-          <button class="btn-primary btn-sm" onclick="window.updateOrderStatus('${o.id}', 'baking')">🔥 Start Baking</button>
+          <button class="btn-primary btn-sm" onclick="window.updateOrderStatus('${o.id}', 'baking')">🔥 Start Baking in Oven</button>
           <button class="btn-danger btn-sm" onclick="window.updateOrderStatus('${o.id}', 'cancelled')">✕ Reject Order</button>
         ` : ''}
         ${o.status === 'baking' ? `
-          <button class="btn-primary btn-sm" style="background:#a855f7" onclick="window.updateOrderStatus('${o.id}', 'ready')">✨ Mark Oven Ready</button>
+          <button class="btn-primary btn-sm" style="background:#a855f7" onclick="window.updateOrderStatus('${o.id}', 'ready')">✨ Mark Oven Ready & Boxed</button>
         ` : ''}
         ${o.status === 'ready' ? `
-          <button class="btn-primary btn-sm" style="background:#10b981" onclick="window.updateOrderStatus('${o.id}', 'delivered')">🚴 Out for Delivery / Picked Up</button>
+          <button class="btn-primary btn-sm" style="background:#10b981" onclick="window.updateOrderStatus('${o.id}', 'delivered')">🚴 Out for Delivery / Delivered</button>
         ` : ''}
       </div>
     </div>
@@ -333,17 +333,17 @@ function renderSalesReport() {
 
   container.innerHTML = `
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:1.5rem">
-      <div style="background:rgba(255,255,255,0.04); padding:1rem; border-radius:var(--radius-md)">
+      <div style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); padding:1.25rem; border-radius:var(--radius-md)">
         <div style="font-size:0.75rem; color:var(--text-subtle)">TOTAL STORE REVENUE</div>
-        <div style="font-size:1.5rem; font-weight:800; color:var(--amber-primary)">$${totalRevenue.toFixed(2)}</div>
+        <div style="font-size:1.6rem; font-weight:800; color:var(--warm-gold)">$${totalRevenue.toFixed(2)}</div>
       </div>
-      <div style="background:rgba(255,255,255,0.04); padding:1rem; border-radius:var(--radius-md)">
+      <div style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); padding:1.25rem; border-radius:var(--radius-md)">
         <div style="font-size:0.75rem; color:var(--text-subtle)">AVERAGE ORDER VALUE</div>
-        <div style="font-size:1.5rem; font-weight:800">$${avgValue.toFixed(2)}</div>
+        <div style="font-size:1.6rem; font-weight:800">$${avgValue.toFixed(2)}</div>
       </div>
-      <div style="background:rgba(255,255,255,0.04); padding:1rem; border-radius:var(--radius-md)">
+      <div style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); padding:1.25rem; border-radius:var(--radius-md)">
         <div style="font-size:0.75rem; color:var(--text-subtle)">COMPLETED DELIVERIES</div>
-        <div style="font-size:1.5rem; font-weight:800; color:#10b981">${completed.length} Orders</div>
+        <div style="font-size:1.6rem; font-weight:800; color:#10b981">${completed.length} Orders</div>
       </div>
     </div>
 
@@ -383,7 +383,7 @@ function renderUsersTable() {
 
   const users = (window.Auth && window.Auth.getUsers) ? window.Auth.getUsers() : JSON.parse(localStorage.getItem('users') || '[]');
 
-  table.innerHTML = users.map((u, idx) => `
+  table.innerHTML = users.map((u) => `
     <tr>
       <td><strong>${u.name}</strong></td>
       <td>${u.email}</td>
@@ -419,7 +419,7 @@ function renderDiscountsTable() {
 
   table.innerHTML = discounts.map(d => `
     <tr>
-      <td><strong style="color:var(--amber-primary)">${d.code}</strong></td>
+      <td><strong style="color:var(--warm-gold)">${d.code}</strong></td>
       <td>${d.discountPercent}% OFF</td>
       <td>Min Spend $${d.minSpend}</td>
       <td><span style="color:${d.active ? '#10b981' : '#ef4444'}; font-weight:700">${d.active ? 'ACTIVE' : 'INACTIVE'}</span></td>
@@ -472,12 +472,12 @@ function renderStockAlerts() {
 
   container.innerHTML = `
     <div style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); padding:1rem; border-radius:var(--radius-md)">
-      <h4 style="color:#fca5a5; margin-bottom:0.5rem">⚠️ Low Stock Alerts (${products.length} items)</h4>
+      <h4 style="color:#fca5a5; margin-bottom:0.5rem">⚠️ Low Inventory Stock Alerts (${products.length} items)</h4>
       <div style="display:flex; flex-direction:column; gap:0.5rem">
         ${products.map(p => `
           <div style="display:flex; justify-content:space-between; font-size:0.85rem">
             <span><strong>${p.title}</strong> (${p.category})</span>
-            <span style="color:#ef4444; font-weight:700">${p.stock} left</span>
+            <span style="color:#ef4444; font-weight:700">${p.stock} units remaining</span>
           </div>
         `).join('')}
       </div>
@@ -494,7 +494,7 @@ function renderShopInfoForm() {
   if (document.getElementById('infoHours')) document.getElementById('infoHours').value = info.hours || '';
 }
 
-// Attach Form Listener in setupEventListeners
+// Attach Form Listener
 const origSetupEvents = setupEventListeners;
 setupEventListeners = function() {
   origSetupEvents();
@@ -533,4 +533,3 @@ window.selectPresetImage = function(imageName, defaultTitle, defaultCategory, de
 
   if (window.Auth && window.Auth.showToast) window.Auth.showToast(`Selected picture: ${imageName}`, 'info');
 };
-

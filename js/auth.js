@@ -1,24 +1,24 @@
-// js/auth.js - Authentication & Storage Management System for LaylPur Bakery with Cloud Firestore Sync
+// js/auth.js - Authentication & Storage Management System for Lyallpur Bakers
 import { db } from './firebase-config.js';
 import { doc, setDoc, onSnapshot } from "firebase/firestore";
 
-// Comprehensive default seed users
+// Default seed users
 const DEFAULT_USERS = [
   {
     name: "System Admin",
-    email: "admin@laylpurbakery.com",
+    email: "admin@lyallpurbakers.com",
     password: "password123",
     role: "admin"
   },
   {
     name: "Master Baker",
-    email: "shopkeeper@laylpurbakery.com",
+    email: "shopkeeper@lyallpurbakers.com",
     password: "password123",
     role: "shopkeeper"
   },
   {
     name: "Alice Baker",
-    email: "customer@laylpurbakery.com",
+    email: "customer@lyallpurbakers.com",
     password: "password123",
     role: "customer"
   }
@@ -26,7 +26,7 @@ const DEFAULT_USERS = [
 
 async function syncUsersToCloud(users) {
   try {
-    await setDoc(doc(db, "laylpur_store", "users"), { data: users, updatedAt: new Date().toISOString() });
+    await setDoc(doc(db, "lyallpur_store", "users"), { data: users, updatedAt: new Date().toISOString() });
   } catch (err) {
     console.warn("Cloud Users Sync Warning:", err);
   }
@@ -34,7 +34,7 @@ async function syncUsersToCloud(users) {
 
 // Real-time Cloud Firestore User Listener
 try {
-  onSnapshot(doc(db, "laylpur_store", "users"), (docSnap) => {
+  onSnapshot(doc(db, "lyallpur_store", "users"), (docSnap) => {
     if (docSnap.exists()) {
       const cloudUsers = docSnap.data().data;
       if (cloudUsers && Array.isArray(cloudUsers)) {
@@ -58,6 +58,15 @@ function initDefaultUsers() {
   }
 
   let updated = false;
+
+  // Migration for old user emails
+  existing.forEach(u => {
+    if (u.email && u.email.includes('laylpurbakery')) {
+      u.email = u.email.replace(/laylpurbakery/g, 'lyallpurbakers');
+      updated = true;
+    }
+  });
+
   DEFAULT_USERS.forEach(defUser => {
     if (!existing.some(u => u.email.toLowerCase() === defUser.email.toLowerCase())) {
       existing.push(defUser);
@@ -87,13 +96,21 @@ function saveUsers(users) {
 }
 
 function setCurrentUser(user) {
+  if (user && user.email && user.email.includes('laylpurbakery')) {
+    user.email = user.email.replace(/laylpurbakery/g, 'lyallpurbakers');
+  }
   localStorage.setItem('currentUser', JSON.stringify(user));
 }
 
 function getCurrentUser() {
   const userJson = localStorage.getItem('currentUser');
   try {
-    return userJson ? JSON.parse(userJson) : null;
+    const user = userJson ? JSON.parse(userJson) : null;
+    if (user && user.email && user.email.includes('laylpurbakery')) {
+      user.email = user.email.replace(/laylpurbakery/g, 'lyallpurbakers');
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+    return user;
   } catch (e) {
     return null;
   }
@@ -148,15 +165,15 @@ function quickFillLogin(role) {
   const roleCustRadio = document.getElementById('roleCustomer');
   
   if (role === 'admin') {
-    if (emailInput) emailInput.value = 'admin@laylpurbakery.com';
+    if (emailInput) emailInput.value = 'admin@lyallpurbakers.com';
     if (passInput) passInput.value = 'password123';
     if (roleAdminRadio) roleAdminRadio.checked = true;
   } else if (role === 'shopkeeper') {
-    if (emailInput) emailInput.value = 'shopkeeper@laylpurbakery.com';
+    if (emailInput) emailInput.value = 'shopkeeper@lyallpurbakers.com';
     if (passInput) passInput.value = 'password123';
     if (roleShopRadio) roleShopRadio.checked = true;
   } else if (role === 'customer') {
-    if (emailInput) emailInput.value = 'customer@laylpurbakery.com';
+    if (emailInput) emailInput.value = 'customer@lyallpurbakers.com';
     if (passInput) passInput.value = 'password123';
     if (roleCustRadio) roleCustRadio.checked = true;
   }
@@ -272,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       setCurrentUser(user);
-      showToast(`Welcome to LaylPur Bakery, ${user.name}! Redirecting...`, 'success');
+      showToast(`Welcome to Lyallpur Bakers, ${user.name}! Redirecting...`, 'success');
 
       setTimeout(() => {
         switch (user.role) {

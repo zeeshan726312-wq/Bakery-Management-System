@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Customer Portal - LaylPur Bakery</title>
-  <meta name="description" content="Customer portal for LaylPur Bakery Management System.">
+  <title>Customer Lounge - Lyallpur Bakers</title>
+  <meta name="description" content="Customer portal for Lyallpur Bakers - order fresh bakes, pastries, sweets, and track live deliveries.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -18,38 +18,51 @@
   </div>
 
   <header class="dashboard-header">
-    <div style="display:flex; align-items:center; gap:0.75rem">
-      <div class="brand-icon" style="width:40px; height:40px; font-size:1.2rem; margin:0">🍰</div>
+    <a href="#" class="brand-emblem">
+      <div class="brand-icon-box">🍰</div>
       <div>
-        <h2 style="font-size:1.1rem; font-weight:700" class="font-serif-title">LaylPur Bakery</h2>
+        <h2 class="brand-name font-serif-title">Lyallpur Bakers</h2>
         <span class="role-badge badge-customer">🛍️ Customer Lounge</span>
       </div>
-    </div>
+    </a>
     <div style="display:flex; align-items:center; gap:1rem">
-      <button id="openCartBtn" class="btn-primary" style="padding:0.45rem 1rem; font-size:0.85rem; position:relative">
-        🛒 Cart <span id="cartBadge" style="background:#fff; color:#000; border-radius:50%; padding:0.1rem 0.45rem; font-size:0.75rem; font-weight:800; margin-left:0.25rem">0</span>
+      <button id="openCartBtn" class="btn-primary" style="padding:0.5rem 1.15rem; font-size:0.85rem; position:relative">
+        🧺 Bakery Basket <span id="cartBadge" style="background:#fff; color:#000; border-radius:50%; padding:0.1rem 0.5rem; font-size:0.75rem; font-weight:800; margin-left:0.35rem">0</span>
       </button>
       <span style="font-size:0.85rem; color:var(--text-muted)">Hi, <strong id="userNameHeader">Customer</strong></span>
       <button onclick="window.logout()" class="btn-logout">Sign Out</button>
     </div>
   </header>
 
-  <main style="flex:1; max-width:1150px; width:100%; margin:2rem auto; padding:0 1rem; position:relative; z-index:1">
+  <main style="flex:1; max-width:1180px; width:100%; margin:2rem auto; padding:0 1rem; position:relative; z-index:1">
     
+    <!-- ♨️ Live Oven Status Ticker Banner -->
+    <div class="oven-ticker-banner">
+      <div style="display:flex; align-items:center; gap:0.6rem">
+        <span class="pulse-dot"></span>
+        <span style="font-weight:700; font-size:0.9rem; color:var(--amber-light)">
+          ♨️ Fresh Batch Baking Live: Next hot batch out of the oven in <span id="ovenTimerCountdown" style="color:#fde047; font-weight:800">13:45</span>
+        </span>
+      </div>
+      <div style="font-size:0.8rem; color:var(--text-muted)">
+        🌾 100% Pure Butter & Organic Flour | 🚚 Free Hot Delivery over $25
+      </div>
+    </div>
+
     <!-- Bakery Contact Banner -->
-    <div id="shopInfoBanner" style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem">
-      <div style="display:flex; align-items:center; gap:0.75rem">
-        <div style="font-size:1.8rem">🏬</div>
+    <div id="shopInfoBanner" style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:1rem 1.25rem; margin-bottom:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem">
+      <div style="display:flex; align-items:center; gap:0.85rem">
+        <div style="font-size:2rem">🏬</div>
         <div>
-          <h4 id="bannerShopName" style="font-size:1rem; font-weight:700">LaylPur Bakery Main Branch</h4>
-          <div style="font-size:0.8rem; color:var(--text-subtle)">
-            📍 <span id="bannerAddress">Clock Tower Plaza, LaylPur</span> | 🕒 <span id="bannerHours">8:00 AM - 10:00 PM</span>
+          <h4 id="bannerShopName" style="font-size:1.05rem; font-weight:700; color:#fff">Lyallpur Bakers Main Branch</h4>
+          <div style="font-size:0.825rem; color:var(--text-subtle); margin-top:0.15rem">
+            📍 <span id="bannerAddress">Clock Tower Plaza, Lyallpur</span> | 🕒 <span id="bannerHours">8:00 AM - 10:00 PM</span>
           </div>
         </div>
       </div>
       <div style="text-align:right">
-        <div style="font-size:0.75rem; color:var(--text-subtle)">CONTACT BAKER</div>
-        <div style="font-size:0.95rem; font-weight:700; color:var(--amber-primary)">
+        <div style="font-size:0.75rem; color:var(--text-subtle); font-weight:700">CONTACT MASTER BAKER</div>
+        <div style="font-size:0.95rem; font-weight:800; color:var(--warm-gold); margin-top:0.15rem">
           📞 <span id="bannerPhone">+1 (555) 019-9283</span> (<span id="bannerBakerName">Master Baker</span>)
         </div>
       </div>
@@ -57,10 +70,10 @@
 
     <!-- Tab Navigation -->
     <div class="tab-navigation">
-      <button class="tab-btn active" data-target="menuTab">🥐 Bakery Menu</button>
+      <button class="tab-btn active" data-target="menuTab">🥐 Fresh Oven Menu</button>
       <button class="tab-btn" data-target="trackerTab">🚚 Live Order Tracker</button>
       <button class="tab-btn" data-target="historyTab">📜 Order History & Receipts</button>
-      <button class="tab-btn" data-target="feedbackTab">💬 Support & Feedback</button>
+      <button class="tab-btn" data-target="feedbackTab">💬 Customer Support</button>
       <button class="tab-btn" data-target="profileTab">👤 My Profile</button>
     </div>
 
@@ -68,11 +81,11 @@
     <div id="menuTab" class="tab-content" style="display:block">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; flex-wrap:wrap; gap:1rem">
         <div>
-          <h2 class="font-serif-title" style="font-size:1.6rem">Fresh Daily Oven Bakes</h2>
-          <p style="color:var(--text-subtle); font-size:0.85rem">Handcrafted with artisan flour, French butter & organic ingredients</p>
+          <h2 class="font-serif-title" style="font-size:1.65rem">Fresh Daily Oven Bakes</h2>
+          <p style="color:var(--text-subtle); font-size:0.85rem">Handcrafted with artisan flour, French butter & traditional family recipes</p>
         </div>
-        <div style="width:260px" class="input-container">
-          <input type="text" id="searchProducts" class="form-input" placeholder="Search bakery menu..." style="padding-left:2.5rem" />
+        <div style="width:270px" class="input-container">
+          <input type="text" id="searchProducts" class="form-input" placeholder="Search sweets, cakes, breads..." style="padding-left:2.5rem" />
           <span class="input-icon">🔍</span>
         </div>
       </div>
@@ -80,12 +93,12 @@
       <!-- Category Filter Pills -->
       <div class="category-pills">
         <button class="cat-pill active" data-cat="All">All Items</button>
-        <button class="cat-pill" data-cat="Sweets">🍬 Sweets</button>
-        <button class="cat-pill" data-cat="Breads">🍞 Breads</button>
+        <button class="cat-pill" data-cat="Sweets">🍬 Royal Sweets</button>
+        <button class="cat-pill" data-cat="Breads">🍞 Oven Breads</button>
         <button class="cat-pill" data-cat="Cakes">🎂 Cakes</button>
         <button class="cat-pill" data-cat="Pastries">🥐 Pastries</button>
         <button class="cat-pill" data-cat="Cookies">🍪 Cookies</button>
-        <button class="cat-pill" data-cat="Beverages">☕ Beverages</button>
+        <button class="cat-pill" data-cat="Beverages">☕ Coffee & Drinks</button>
       </div>
 
       <!-- Products Grid Container -->
@@ -95,7 +108,7 @@
     <!-- 🚚 LIVE TRACKER TAB -->
     <div id="trackerTab" class="tab-content" style="display:none">
       <div class="dashboard-card">
-        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1rem">Live Order Tracking</h2>
+        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1rem">Live Baking & Delivery Tracker</h2>
         <div id="trackerContent"></div>
       </div>
     </div>
@@ -103,7 +116,7 @@
     <!-- 📜 ORDER HISTORY TAB -->
     <div id="historyTab" class="tab-content" style="display:none">
       <div class="dashboard-card">
-        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1rem">Your Order History & Receipts</h2>
+        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1rem">Your Order History & Invoices</h2>
         <div class="table-wrapper">
           <table class="custom-table">
             <thead>
@@ -112,7 +125,7 @@
                 <th>Date</th>
                 <th>Total Amount</th>
                 <th>Status</th>
-                <th>Receipt Invoice</th>
+                <th>Printable Receipt</th>
               </tr>
             </thead>
             <tbody id="orderHistoryTable"></tbody>
@@ -123,28 +136,28 @@
 
     <!-- 💬 FEEDBACK TAB -->
     <div id="feedbackTab" class="tab-content" style="display:none">
-      <div class="dashboard-card" style="max-width:600px; margin:0 auto">
+      <div class="dashboard-card" style="max-width:620px; margin:0 auto">
         <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:0.5rem">Customer Feedback & Support</h2>
-        <p style="color:var(--text-subtle); font-size:0.85rem; margin-bottom:1.5rem">Have a compliment or complaint? Send a direct message to LaylPur Bakery Management.</p>
+        <p style="color:var(--text-subtle); font-size:0.85rem; margin-bottom:1.5rem">Send a direct note to Lyallpur Bakers master chef and management.</p>
 
         <form id="feedbackForm">
           <div class="form-group">
             <label class="form-label">Subject</label>
-            <input type="text" id="fbSubject" class="form-input" style="padding-left:1rem" placeholder="e.g. Sourdough loaf feedback" required />
+            <input type="text" id="fbSubject" class="form-input" style="padding-left:1rem" placeholder="e.g. Royal Barfi feedback" required />
           </div>
           <div class="form-group">
             <label class="form-label">Message / Details</label>
             <textarea id="fbMessage" class="form-input" style="padding-left:1rem; height:120px; resize:vertical" placeholder="Describe your experience..." required></textarea>
           </div>
-          <button type="submit" class="btn-primary">Send Feedback to Admin</button>
+          <button type="submit" class="btn-primary">Send Message to Baker</button>
         </form>
       </div>
     </div>
 
     <!-- 👤 PROFILE TAB -->
     <div id="profileTab" class="tab-content" style="display:none">
-      <div class="dashboard-card" style="max-width:600px; margin:0 auto">
-        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1.5rem">Customer Profile & Address</h2>
+      <div class="dashboard-card" style="max-width:620px; margin:0 auto">
+        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1.5rem">Customer Profile & Delivery Address</h2>
         <form id="profileForm">
           <div class="form-group">
             <label class="form-label">Full Name</label>
@@ -156,11 +169,11 @@
           </div>
           <div class="form-group">
             <label class="form-label">Contact Phone</label>
-            <input type="text" id="profPhone" class="form-input" style="padding-left:1rem" placeholder="+1 555-0192" />
+            <input type="text" id="profPhone" class="form-input" style="padding-left:1rem" placeholder="+1 (555) 0192" />
           </div>
           <div class="form-group">
             <label class="form-label">Default Delivery Address</label>
-            <textarea id="profAddress" class="form-input" style="padding-left:1rem; height:80px" placeholder="Street, House #, LaylPur"></textarea>
+            <textarea id="profAddress" class="form-input" style="padding-left:1rem; height:80px" placeholder="Street, House #, Lyallpur"></textarea>
           </div>
           <button type="submit" class="btn-primary">Save Profile Changes</button>
         </form>
@@ -169,25 +182,25 @@
 
   </main>
 
-  <!-- 🛒 CART DRAWER -->
+  <!-- 🧺 CART DRAWER -->
   <div id="cartBackdrop" class="cart-drawer-backdrop"></div>
   <div id="cartDrawer" class="cart-drawer">
     <div class="cart-header">
-      <h3 class="font-serif-title" style="font-size:1.3rem">Your Bakery Cart</h3>
+      <h3 class="font-serif-title" style="font-size:1.3rem">Your Bakery Basket 🧺</h3>
       <button id="closeCartBtn" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer">&times;</button>
     </div>
     <div id="cartItemsList" class="cart-items-list"></div>
     <div class="cart-footer">
       <div style="display:flex; gap:0.5rem; margin-bottom:1rem">
-        <input type="text" id="couponCode" class="form-input" placeholder="Promo code (e.g. LAYLPUR10)" style="padding-left:1rem; text-transform:uppercase" />
+        <input type="text" id="couponCode" class="form-input" placeholder="Promo code (e.g. LYALLPUR10)" style="padding-left:1rem; text-transform:uppercase" />
         <button id="applyCouponBtn" class="btn-secondary" style="padding:0 1rem; font-weight:700">Apply</button>
       </div>
       <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem">
         <span>Subtotal:</span>
         <span id="cartSubtotal">$0.00</span>
       </div>
-      <div style="display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:800; font-size:1.1rem; color:var(--amber-primary)">
-        <span>Total Amount:</span>
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:800; font-size:1.15rem; color:var(--warm-gold)">
+        <span>Total Payable:</span>
         <span id="cartTotal">$0.00</span>
       </div>
       <button id="openCheckoutBtn" class="btn-primary">Proceed to Checkout →</button>
@@ -198,7 +211,7 @@
   <div id="checkoutModal" class="modal-overlay">
     <div class="modal-card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem">
-        <h3 class="font-serif-title" style="font-size:1.4rem">Complete Your Order</h3>
+        <h3 class="font-serif-title" style="font-size:1.45rem">Complete Your Bakery Order</h3>
         <button id="closeCheckoutBtn" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer">&times;</button>
       </div>
 
@@ -207,45 +220,45 @@
       <form id="checkoutForm">
         <div class="form-group">
           <label class="form-label">Delivery Address</label>
-          <input type="text" id="checkoutAddress" class="form-input" style="padding-left:1rem" placeholder="Full delivery address in LaylPur" required />
+          <input type="text" id="checkoutAddress" class="form-input" style="padding-left:1rem" placeholder="Full delivery address in Lyallpur" required />
         </div>
         <div class="form-group">
           <label class="form-label">Contact Phone</label>
-          <input type="text" id="checkoutPhone" class="form-input" style="padding-left:1rem" placeholder="+1 555-0192" required />
+          <input type="text" id="checkoutPhone" class="form-input" style="padding-left:1rem" placeholder="+1 (555) 0192" required />
         </div>
         <div class="form-group">
-          <label class="form-label">Payment Option</label>
-          <div style="display:flex; gap:1rem; margin-top:0.5rem">
+          <label class="form-label">Payment Method</label>
+          <div style="display:flex; gap:1.25rem; margin-top:0.5rem">
             <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer">
               <input type="radio" name="paymentMethod" value="Cash on Delivery" checked />
               <span>💵 Cash on Delivery</span>
             </label>
             <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer">
               <input type="radio" name="paymentMethod" value="Credit Card" />
-              <span>💳 Credit Card</span>
+              <span>💳 Credit / Debit Card</span>
             </label>
           </div>
         </div>
 
-        <button type="submit" class="btn-primary" style="margin-top:1rem">Place Bakery Order</button>
+        <button type="submit" class="btn-primary" style="margin-top:1.25rem">Place Bakery Order ♨️</button>
       </form>
     </div>
   </div>
 
   <!-- 🧾 RECEIPT INVOICE MODAL -->
   <div id="receiptModal" class="modal-overlay">
-    <div class="modal-card">
+    <div class="modal-card" style="max-width:520px">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem">
-        <h3 class="font-serif-title" style="font-size:1.2rem">Official Invoice Receipt</h3>
+        <h3 class="font-serif-title" style="font-size:1.25rem">Artisan Receipt Invoice</h3>
         <button id="closeReceiptBtn" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer">&times;</button>
       </div>
       <div id="receiptModalBody"></div>
-      <button onclick="window.print()" class="btn-secondary" style="width:100%; margin-top:1rem; font-weight:700">🖨️ Print Receipt</button>
+      <button onclick="window.print()" class="btn-secondary" style="width:100%; margin-top:1rem; font-weight:700">🖨️ Print Bakery Invoice</button>
     </div>
   </div>
 
-  <footer style="text-align:center; padding:1.5rem; color:var(--text-subtle); font-size:0.8rem">
-    © 2026 LaylPur Bakery. All rights reserved.
+  <footer style="text-align:center; padding:1.75rem; color:var(--text-subtle); font-size:0.8rem; border-top:1px solid rgba(255,255,255,0.06)">
+    © 2026 Lyallpur Bakers. All rights reserved. Handcrafted Daily.
   </footer>
 
   <script type="module" src="js/auth.js"></script>

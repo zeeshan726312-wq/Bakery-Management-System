@@ -1,4 +1,4 @@
-// js/firebase-config.js - Firebase Initialization & Configuration for LaylPur Bakery
+// js/firebase-config.js - Firebase Initialization & Configuration for Lyallpur Bakers
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Super Admin Console - LaylPur Bakery</title>
-  <meta name="description" content="Super Admin portal for LaylPur Bakery to track daily earnings, riders, products, and add new shop branches." />
+  <title>Super Admin Console - Lyallpur Bakers</title>
+  <meta name="description" content="Super Admin portal for Lyallpur Bakers to track daily earnings, riders, products, and add new shop branches." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -18,20 +18,20 @@
   </div>
 
   <header class="dashboard-header">
-    <div style="display:flex; align-items:center; gap:0.75rem">
-      <div class="brand-icon" style="width:40px; height:40px; font-size:1.2rem; margin:0">👑</div>
+    <a href="#" class="brand-emblem">
+      <div class="brand-icon-box">👑</div>
       <div>
-        <h2 style="font-size:1.1rem; font-weight:700" class="font-serif-title">LaylPur Bakery</h2>
+        <h2 class="brand-name font-serif-title">Lyallpur Bakers</h2>
         <span class="role-badge badge-admin">👑 Super Admin Console</span>
       </div>
-    </div>
+    </a>
     <div style="display:flex; align-items:center; gap:1rem">
       <span style="font-size:0.85rem; color:var(--text-muted)">Hi, <strong id="userNameHeader">Super Admin</strong></span>
       <button onclick="window.logout()" class="btn-logout">Sign Out</button>
     </div>
   </header>
 
-  <main style="flex:1; max-width:1150px; width:100%; margin:2rem auto; padding:0 1rem; position:relative; z-index:1">
+  <main style="flex:1; max-width:1180px; width:100%; margin:2rem auto; padding:0 1rem; position:relative; z-index:1">
     
     <!-- Navigation Tabs -->
     <div class="tab-navigation">
@@ -74,7 +74,7 @@
             <h2 class="font-serif-title" style="font-size:1.5rem">Bakery Shop Branches</h2>
             <p style="color:var(--text-subtle); font-size:0.85rem">Manage active bakery branches and add new shop locations.</p>
           </div>
-          <button id="openAddShopBtn" class="btn-primary" style="padding:0.6rem 1.2rem; font-size:0.9rem">+ Add New Bakery Shop</button>
+          <button id="openAddShopBtn" class="btn-primary" style="padding:0.6rem 1.25rem; font-size:0.9rem">+ Add New Bakery Shop</button>
         </div>
 
         <div class="table-wrapper">
@@ -103,7 +103,7 @@
             <h2 class="font-serif-title" style="font-size:1.5rem">Delivery Riders Fleet</h2>
             <p style="color:var(--text-subtle); font-size:0.85rem">Manage delivery riders and track active delivery statuses.</p>
           </div>
-          <button id="openAddRiderBtn" class="btn-primary" style="padding:0.6rem 1.2rem; font-size:0.9rem">+ Add New Rider</button>
+          <button id="openAddRiderBtn" class="btn-primary" style="padding:0.6rem 1.25rem; font-size:0.9rem">+ Add New Rider</button>
         </div>
 
         <div class="table-wrapper">
@@ -159,12 +159,12 @@
       <form id="addShopForm">
         <div class="form-group">
           <label class="form-label">Shop / Branch Name</label>
-          <input type="text" id="shopName" class="form-input" style="padding-left:1rem" placeholder="e.g. LaylPur Mall Road Branch" required />
+          <input type="text" id="shopName" class="form-input" style="padding-left:1rem" placeholder="e.g. Lyallpur Bakers Mall Road Branch" required />
         </div>
 
         <div class="form-group">
           <label class="form-label">Branch Location / Address</label>
-          <input type="text" id="shopLocation" class="form-input" style="padding-left:1rem" placeholder="e.g. Mall Road Sector 4, LaylPur" required />
+          <input type="text" id="shopLocation" class="form-input" style="padding-left:1rem" placeholder="e.g. Mall Road Sector 4, Lyallpur" required />
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
@@ -218,8 +218,8 @@
     </div>
   </div>
 
-  <footer style="text-align:center; padding:1.5rem; color:var(--text-subtle); font-size:0.8rem">
-    © 2026 LaylPur Bakery Super Admin Console.
+  <footer style="text-align:center; padding:1.75rem; color:var(--text-subtle); font-size:0.8rem">
+    © 2026 Lyallpur Bakers Super Admin Console.
   </footer>
 
   <script type="module" src="js/auth.js"></script>

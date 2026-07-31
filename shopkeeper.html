@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shopkeeper Portal - LaylPur Bakery</title>
-  <meta name="description" content="Master Shopkeeper portal for LaylPur Bakery Management System.">
+  <title>Shopkeeper Portal - Lyallpur Bakers</title>
+  <meta name="description" content="Master Shopkeeper portal for Lyallpur Bakers Management System.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -18,20 +18,20 @@
   </div>
 
   <header class="dashboard-header">
-    <div style="display:flex; align-items:center; gap:0.75rem">
-      <div class="brand-icon" style="width:40px; height:40px; font-size:1.2rem; margin:0">🥖</div>
+    <a href="#" class="brand-emblem">
+      <div class="brand-icon-box">🥖</div>
       <div>
-        <h2 style="font-size:1.1rem; font-weight:700" class="font-serif-title">LaylPur Bakery</h2>
-        <span class="role-badge badge-shopkeeper">🍞 Shopkeeper Portal</span>
+        <h2 class="brand-name font-serif-title">Lyallpur Bakers</h2>
+        <span class="role-badge badge-shopkeeper">🍞 Shopkeeper Control Panel</span>
       </div>
-    </div>
+    </a>
     <div style="display:flex; align-items:center; gap:1rem">
       <span style="font-size:0.85rem; color:var(--text-muted)">Hi, <strong id="userNameHeader">Baker</strong></span>
       <button onclick="window.logout()" class="btn-logout">Sign Out</button>
     </div>
   </header>
 
-  <main style="flex:1; max-width:1150px; width:100%; margin:2rem auto; padding:0 1rem; position:relative; z-index:1">
+  <main style="flex:1; max-width:1180px; width:100%; margin:2rem auto; padding:0 1rem; position:relative; z-index:1">
     
     <!-- Navigation Tabs -->
     <div class="tab-navigation">
@@ -51,10 +51,10 @@
       <div class="dashboard-card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem">
           <div>
-            <h2 class="font-serif-title" style="font-size:1.5rem">Bakery Product Catalog</h2>
+            <h2 class="font-serif-title" style="font-size:1.5rem">Lyallpur Bakers Catalog</h2>
             <p style="color:var(--text-subtle); font-size:0.85rem">Add new fresh bakes with title, price, stock, and photo. Changes reflect live to customers.</p>
           </div>
-          <button id="openAddProductBtn" class="btn-primary" style="padding:0.6rem 1.2rem; font-size:0.9rem">+ Add New Bakery Item</button>
+          <button id="openAddProductBtn" class="btn-primary" style="padding:0.6rem 1.25rem; font-size:0.9rem">+ Add New Bakery Item</button>
         </div>
 
         <div class="table-wrapper">
@@ -137,7 +137,7 @@
             <h2 class="font-serif-title" style="font-size:1.5rem">User Accounts & Access</h2>
             <p style="color:var(--text-subtle); font-size:0.85rem">Manage Shopkeepers and Customer accounts.</p>
           </div>
-          <button id="openAddUserBtn" class="btn-primary" style="padding:0.6rem 1.2rem; font-size:0.9rem">+ Add New User Account</button>
+          <button id="openAddUserBtn" class="btn-primary" style="padding:0.6rem 1.25rem; font-size:0.9rem">+ Add New User Account</button>
         </div>
 
         <div class="table-wrapper">
@@ -162,7 +162,7 @@
         <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1rem">Promo Codes & Discounts</h2>
         
         <form id="addDiscountForm" style="display:flex; gap:0.75rem; margin-bottom:1.5rem; flex-wrap:wrap">
-          <input type="text" id="discCode" class="form-input" style="padding-left:1rem; flex:1; text-transform:uppercase" placeholder="CODE (e.g. LAYLPUR10)" required />
+          <input type="text" id="discCode" class="form-input" style="padding-left:1rem; flex:1; text-transform:uppercase" placeholder="CODE (e.g. LYALLPUR10)" required />
           <input type="number" id="discPercent" class="form-input" style="padding-left:1rem; width:140px" placeholder="Discount %" required />
           <input type="number" id="discMinSpend" class="form-input" style="padding-left:1rem; width:140px" placeholder="Min Spend ($)" required />
           <button type="submit" class="btn-primary" style="width:auto">Create Promo</button>
@@ -208,7 +208,7 @@
     <!-- 📦 STOCK ALERTS TAB -->
     <div id="stockTab" class="tab-content" style="display:none">
       <div class="dashboard-card">
-        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1rem">Inventory & Ingredient Stock Monitor</h2>
+        <h2 class="font-serif-title" style="font-size:1.5rem; margin-bottom:1rem">Inventory & Stock Monitor</h2>
         <div id="stockAlerts"></div>
       </div>
     </div>
@@ -255,12 +255,12 @@
           <div class="form-group">
             <label class="form-label">Category</label>
             <select id="prodCategory" class="form-input" style="padding-left:1rem; background:#372115" required>
-              <option value="Sweets">🍬 Sweets</option>
-              <option value="Breads">🍞 Breads</option>
+              <option value="Sweets">🍬 Royal Sweets</option>
+              <option value="Breads">🍞 Oven Breads</option>
               <option value="Cakes">🎂 Cakes</option>
               <option value="Pastries">🥐 Pastries</option>
               <option value="Cookies">🍪 Cookies</option>
-              <option value="Beverages">☕ Beverages</option>
+              <option value="Beverages">☕ Coffee & Drinks</option>
             </select>
           </div>
 
@@ -286,9 +286,9 @@
         <div class="form-group">
           <label class="form-label">Product Photo (Quick Select, URL or Upload File)</label>
           <div style="display:flex; gap:0.4rem; margin-bottom:0.6rem; flex-wrap:wrap">
-            <button type="button" class="demo-pill" onclick="window.selectPresetImage('Barfi.webp', 'Barfi', 'Sweets', 8.00)">🍬 Barfi</button>
-            <button type="button" class="demo-pill" onclick="window.selectPresetImage('Biscuits.avif', 'Biscuits', 'Cookies', 6.00)">🍪 Biscuits</button>
-            <button type="button" class="demo-pill" onclick="window.selectPresetImage('Gulab Jamun.webp', 'Gulab Jamun', 'Sweets', 7.50)">🍯 Gulab Jamun</button>
+            <button type="button" class="demo-pill" onclick="window.selectPresetImage('Barfi.webp', 'Lyallpur Royal Barfi', 'Sweets', 8.00)">🍬 Barfi</button>
+            <button type="button" class="demo-pill" onclick="window.selectPresetImage('Biscuits.avif', 'Artisan Biscuits', 'Cookies', 6.00)">🍪 Biscuits</button>
+            <button type="button" class="demo-pill" onclick="window.selectPresetImage('Gulab Jamun.webp', 'Golden Gulab Jamun', 'Sweets', 7.50)">🍯 Gulab Jamun</button>
           </div>
           <input type="text" id="prodImgUrl" class="form-input" style="padding-left:1rem; margin-bottom:0.5rem" placeholder="Barfi.webp or https://..." />
           <div style="font-size:0.75rem; color:var(--text-subtle); margin-bottom:0.5rem">OR Upload Local Photo File:</div>
@@ -325,7 +325,7 @@
 
         <div class="form-group">
           <label class="form-label">Email Address</label>
-          <input type="email" id="newUserEmail" class="form-input" style="padding-left:1rem" placeholder="john@laylpurbakery.com" required />
+          <input type="email" id="newUserEmail" class="form-input" style="padding-left:1rem" placeholder="john@lyallpurbakers.com" required />
         </div>
 
         <div class="form-group">
@@ -346,8 +346,8 @@
     </div>
   </div>
 
-  <footer style="text-align:center; padding:1.5rem; color:var(--text-subtle); font-size:0.8rem">
-    © 2026 LaylPur Bakery. All rights reserved.
+  <footer style="text-align:center; padding:1.75rem; color:var(--text-subtle); font-size:0.8rem">
+    © 2026 Lyallpur Bakers. All rights reserved.
   </footer>
 
   <script type="module" src="js/auth.js"></script>

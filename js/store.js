@@ -1,4 +1,4 @@
-// js/store.js - Central Data Store & Cloud Firestore Realtime Sync for LaylPur Bakery
+// js/store.js - Central Data Store & Cloud Firestore Realtime Sync for Lyallpur Bakers
 import { db } from './firebase-config.js';
 import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 
@@ -6,36 +6,39 @@ import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 const INITIAL_PRODUCTS = [
   {
     id: "prod-barfi",
-    title: "Barfi",
+    title: "Lyallpur Royal Barfi",
     category: "Sweets",
     price: 8.00,
-    stock: 25,
+    stock: 35,
     image: "Barfi.webp",
-    description: "Traditional LaylPur milk barfi made with pure desi ghee, silver leaf & ground pistachios.",
+    description: "Traditional Lyallpur Bakers milk barfi made with pure desi ghee, silver foil leaf & ground pistachios.",
     rating: 5.0,
-    discount: 0
+    discount: 0,
+    ribbon: "Chef's Special 🍯"
   },
   {
     id: "prod-biscuits",
-    title: "Biscuits",
+    title: "Artisan Tea Biscuits",
     category: "Cookies",
     price: 6.00,
-    stock: 40,
+    stock: 50,
     image: "Biscuits.avif",
-    description: "Crispy freshly baked almond & cardamom bakery tea biscuits.",
+    description: "Crispy freshly baked almond & cardamom bakery tea biscuits handcrafted daily.",
     rating: 4.9,
-    discount: 5
+    discount: 5,
+    ribbon: "Bestseller ⭐"
   },
   {
     id: "prod-gulabjamun",
-    title: "Gulab Jamun",
+    title: "Golden Gulab Jamun",
     category: "Sweets",
     price: 7.50,
-    stock: 30,
+    stock: 40,
     image: "Gulab Jamun.webp",
-    description: "Soft, warm, syrup-soaked golden brown gulab jamun sweet delights.",
+    description: "Soft, warm, cardamom syrup-soaked golden brown sweet delights from Lyallpur Bakers.",
     rating: 5.0,
-    discount: 0
+    discount: 0,
+    ribbon: "Oven Hot ♨️"
   },
   {
     id: "prod-1",
@@ -46,18 +49,20 @@ const INITIAL_PRODUCTS = [
     image: "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&w=600&q=80",
     description: "Traditional slow-fermented sourdough with a crispy golden crust and soft airy crumb.",
     rating: 4.9,
-    discount: 0
+    discount: 0,
+    ribbon: "Organic Wheat 🌾"
   },
   {
     id: "prod-2",
     title: "Belgian Chocolate Cake",
     category: "Cakes",
     price: 28.00,
-    stock: 12,
+    stock: 15,
     image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
     description: "Rich 3-layer dark chocolate fudge cake with Belgian chocolate ganache.",
     rating: 5.0,
-    discount: 10
+    discount: 10,
+    ribbon: "Premium Cake 🍰"
   },
   {
     id: "prod-3",
@@ -66,9 +71,10 @@ const INITIAL_PRODUCTS = [
     price: 3.80,
     stock: 40,
     image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80",
-    description: "Flaky, buttery French style croissant baked fresh every morning.",
+    description: "Flaky, buttery French style croissant baked fresh in our oven every morning.",
     rating: 4.8,
-    discount: 0
+    discount: 0,
+    ribbon: "Baked Fresh 🥐"
   },
   {
     id: "prod-4",
@@ -79,18 +85,20 @@ const INITIAL_PRODUCTS = [
     image: "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?auto=format&fit=crop&w=600&q=80",
     description: "Moist red velvet cupcake topped with signature cream cheese frosting.",
     rating: 4.7,
-    discount: 0
+    discount: 0,
+    ribbon: "Sweet Treat 🧁"
   },
   {
     id: "prod-5",
     title: "Choc Chip Cookie Box (6pcs)",
     category: "Cookies",
     price: 8.50,
-    stock: 18,
+    stock: 20,
     image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=600&q=80",
     description: "Warm gooey cookies loaded with melted dark & milk chocolate chunks.",
     rating: 4.9,
-    discount: 15
+    discount: 15,
+    ribbon: "Choc Fudge 🍪"
   },
   {
     id: "prod-6",
@@ -101,7 +109,8 @@ const INITIAL_PRODUCTS = [
     image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80",
     description: "Fresh espresso brewed over ice with vanilla syrup and salted caramel drizzle.",
     rating: 4.6,
-    discount: 0
+    discount: 0,
+    ribbon: "Cold Brew ☕"
   }
 ];
 
@@ -109,13 +118,13 @@ const INITIAL_PRODUCTS = [
 const INITIAL_ORDERS = [
   {
     id: "ORD-101",
-    customerEmail: "customer@laylpurbakery.com",
+    customerEmail: "customer@lyallpurbakers.com",
     customerName: "Alice Baker",
     phone: "+1 555-0192",
-    address: "742 Evergreen Terrace, LaylPur",
+    address: "742 Evergreen Terrace, Lyallpur",
     items: [
-      { id: "prod-barfi", title: "Barfi", price: 8.00, qty: 2, image: "Barfi.webp" },
-      { id: "prod-gulabjamun", title: "Gulab Jamun", price: 7.50, qty: 1, image: "Gulab Jamun.webp" }
+      { id: "prod-barfi", title: "Lyallpur Royal Barfi", price: 8.00, qty: 2, image: "Barfi.webp" },
+      { id: "prod-gulabjamun", title: "Golden Gulab Jamun", price: 7.50, qty: 1, image: "Gulab Jamun.webp" }
     ],
     subtotal: 23.50,
     discountAmount: 0,
@@ -123,13 +132,13 @@ const INITIAL_ORDERS = [
     paymentMethod: "Cash on Delivery",
     paymentStatus: "Paid",
     status: "delivered",
-    createdAt: "2026-07-29T10:30:00.000Z"
+    createdAt: new Date().toISOString()
   }
 ];
 
 // Initial Discounts
 const INITIAL_DISCOUNTS = [
-  { id: "disc-1", code: "LAYLPUR10", discountPercent: 10, minSpend: 20, active: true },
+  { id: "disc-1", code: "LYALLPUR10", discountPercent: 10, minSpend: 20, active: true },
   { id: "disc-2", code: "WELCOME20", discountPercent: 20, minSpend: 30, active: true }
 ];
 
@@ -138,18 +147,18 @@ const INITIAL_FEEDBACKS = [
   {
     id: "fb-1",
     customerName: "Alice Baker",
-    email: "customer@laylpurbakery.com",
-    subject: "Loved the Barfi and Gulab Jamun!",
-    message: "The Barfi and Gulab Jamun were super fresh and delicious!",
-    date: "2026-07-29",
+    email: "customer@lyallpurbakers.com",
+    subject: "Loved the Royal Barfi and Gulab Jamun!",
+    message: "The Barfi and Gulab Jamun were super fresh and delicious! Thank you Lyallpur Bakers!",
+    date: new Date().toISOString().split('T')[0],
     status: "resolved"
   }
 ];
 
 // Initial Seed Shop Branches
 const INITIAL_SHOPS = [
-  { id: "shop-1", name: "LaylPur Main Branch", location: "Clock Tower Plaza, LaylPur", manager: "Master Baker", phone: "+1 555-0100", status: "Active", createdAt: "2026-01-10" },
-  { id: "shop-2", name: "LaylPur Mall Road Branch", location: "Mall Road Sector 4, LaylPur", manager: "Hamza Baker", phone: "+1 555-0200", status: "Active", createdAt: "2026-03-15" }
+  { id: "shop-1", name: "Lyallpur Bakers Main Branch", location: "Clock Tower Plaza, Lyallpur", manager: "Master Baker", phone: "+1 (555) 019-9283", status: "Active", createdAt: "2026-01-10" },
+  { id: "shop-2", name: "Lyallpur Bakers Mall Road", location: "Mall Road Sector 4, Lyallpur", manager: "Hamza Baker", phone: "+1 (555) 029-4821", status: "Active", createdAt: "2026-03-15" }
 ];
 
 // Initial Seed Delivery Riders
@@ -161,10 +170,10 @@ const INITIAL_RIDERS = [
 // Initial Shopkeeper Store Info & Contact
 const DEFAULT_SHOP_INFO = {
   shopkeeperName: "Master Baker",
-  shopName: "LaylPur Bakery Main Branch",
+  shopName: "Lyallpur Bakers Main Branch",
   phone: "+1 (555) 019-9283",
-  address: "Clock Tower Plaza, Main Bazaar, LaylPur",
-  email: "shopkeeper@laylpurbakery.com",
+  address: "Clock Tower Plaza, Main Bazaar, Lyallpur",
+  email: "shopkeeper@lyallpurbakers.com",
   hours: "8:00 AM - 10:00 PM Daily"
 };
 
@@ -173,7 +182,7 @@ let isCloudSynced = false;
 
 async function syncDocToCloud(docName, data) {
   try {
-    await setDoc(doc(db, "laylpur_store", docName), { data, updatedAt: new Date().toISOString() });
+    await setDoc(doc(db, "lyallpur_store", docName), { data, updatedAt: new Date().toISOString() });
   } catch (err) {
     console.warn("Cloud Firestore Sync Warning:", err);
   }
@@ -184,7 +193,7 @@ function initRealtimeCloudSync() {
   const collections = ['products', 'orders', 'discounts', 'feedbacks', 'shops', 'riders', 'shop_info'];
   
   collections.forEach(col => {
-    onSnapshot(doc(db, "laylpur_store", col), (docSnap) => {
+    onSnapshot(doc(db, "lyallpur_store", col), (docSnap) => {
       if (docSnap.exists()) {
         const cloudData = docSnap.data().data;
         if (cloudData) {
@@ -216,7 +225,14 @@ export const Store = {
       return DEFAULT_SHOP_INFO;
     }
     try {
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      // Migrate old names if present
+      if (parsed.shopName && parsed.shopName.includes('LaylPur')) {
+        parsed.shopName = parsed.shopName.replace(/LaylPur/g, 'Lyallpur');
+        parsed.address = parsed.address.replace(/LaylPur/g, 'Lyallpur');
+        localStorage.setItem('bakery_shop_info', JSON.stringify(parsed));
+      }
+      return parsed;
     } catch {
       return DEFAULT_SHOP_INFO;
     }
@@ -245,6 +261,18 @@ export const Store = {
     }
 
     let updated = false;
+    // Migrate old product names
+    products.forEach(p => {
+      if (p.description && p.description.includes('LaylPur')) {
+        p.description = p.description.replace(/LaylPur/g, 'Lyallpur');
+        updated = true;
+      }
+      if (p.title && p.title.includes('LaylPur')) {
+        p.title = p.title.replace(/LaylPur/g, 'Lyallpur');
+        updated = true;
+      }
+    });
+
     INITIAL_PRODUCTS.forEach(initP => {
       if (!products.some(p => p.id === initP.id || p.title.toLowerCase() === initP.title.toLowerCase())) {
         products.unshift(initP);
@@ -269,14 +297,15 @@ export const Store = {
     const products = this.getProducts();
     const newProd = {
       id: "prod-" + Date.now(),
-      title: product.title || "Untitled Bakery Product",
+      title: product.title || "Untitled Bakery Item",
       category: product.category || "General",
       price: parseFloat(product.price) || 0,
       stock: parseInt(product.stock) || 0,
       image: product.image || "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
-      description: product.description || "Fresh baked item from LaylPur Bakery.",
+      description: product.description || "Fresh baked delight from Lyallpur Bakers.",
       rating: 5.0,
-      discount: parseInt(product.discount) || 0
+      discount: parseInt(product.discount) || 0,
+      ribbon: product.ribbon || "Oven Fresh ♨️"
     };
     products.unshift(newProd);
     this.saveProducts(products);
@@ -308,7 +337,16 @@ export const Store = {
       return INITIAL_ORDERS;
     }
     try {
-      return JSON.parse(data);
+      const orders = JSON.parse(data);
+      orders.forEach(o => {
+        if (o.customerEmail && o.customerEmail.includes('laylpurbakery')) {
+          o.customerEmail = o.customerEmail.replace(/laylpurbakery/g, 'lyallpurbakers');
+        }
+        if (o.address && o.address.includes('LaylPur')) {
+          o.address = o.address.replace(/LaylPur/g, 'Lyallpur');
+        }
+      });
+      return orders;
     } catch {
       return INITIAL_ORDERS;
     }
@@ -326,7 +364,7 @@ export const Store = {
       customerEmail: orderData.customerEmail,
       customerName: orderData.customerName,
       phone: orderData.phone || "+1 555-0000",
-      address: orderData.address || "LaylPur Main City",
+      address: orderData.address || "Lyallpur Main City",
       items: orderData.items,
       subtotal: orderData.subtotal,
       discountAmount: orderData.discountAmount || 0,
@@ -374,7 +412,14 @@ export const Store = {
       return INITIAL_SHOPS;
     }
     try {
-      return JSON.parse(data);
+      const shops = JSON.parse(data);
+      shops.forEach(s => {
+        if (s.name && s.name.includes('LaylPur')) {
+          s.name = s.name.replace(/LaylPur/g, 'Lyallpur');
+          s.location = s.location.replace(/LaylPur/g, 'Lyallpur');
+        }
+      });
+      return shops;
     } catch {
       return INITIAL_SHOPS;
     }
@@ -384,8 +429,8 @@ export const Store = {
     const shops = this.getShops();
     const newShop = {
       id: "shop-" + Date.now(),
-      name: shop.name || "LaylPur New Branch",
-      location: shop.location || "LaylPur City",
+      name: shop.name || "Lyallpur Bakers New Branch",
+      location: shop.location || "Lyallpur City",
       manager: shop.manager || "Branch Manager",
       phone: shop.phone || "+1 555-0000",
       status: "Active",

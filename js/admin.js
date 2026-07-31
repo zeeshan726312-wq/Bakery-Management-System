@@ -1,4 +1,4 @@
-// js/admin.js - Super Admin Console Logic for LaylPur Bakery
+// js/admin.js - Super Admin Console Logic for Lyallpur Bakers
 import { Store } from './store.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!user || user.role !== 'admin') {
     user = {
       name: "System Admin",
-      email: "admin@laylpurbakery.com",
+      email: "admin@lyallpurbakers.com",
       role: "admin"
     };
     if (window.Auth && window.Auth.setCurrentUser) {
@@ -123,7 +123,7 @@ function renderEarnings() {
     </div>
     <div style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); padding:1.25rem; border-radius:var(--radius-md)">
       <div style="font-size:0.75rem; color:var(--text-subtle); text-transform:uppercase">TOTAL STORE REVENUE</div>
-      <div style="font-size:1.8rem; font-weight:800; color:var(--amber-primary)">$${totalRevenue.toFixed(2)}</div>
+      <div style="font-size:1.8rem; font-weight:800; color:var(--warm-gold)">$${totalRevenue.toFixed(2)}</div>
     </div>
     <div style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); padding:1.25rem; border-radius:var(--radius-md)">
       <div style="font-size:0.75rem; color:var(--text-subtle); text-transform:uppercase">AVERAGE ORDER VALUE</div>
@@ -136,7 +136,7 @@ function renderEarnings() {
       <td><strong>${o.id}</strong></td>
       <td>${o.customerName}</td>
       <td>${o.paymentMethod}</td>
-      <td><strong style="color:var(--amber-primary)">$${o.total.toFixed(2)}</strong></td>
+      <td><strong style="color:var(--warm-gold)">$${o.total.toFixed(2)}</strong></td>
       <td><span class="badge-status status-${o.status}">${o.status}</span></td>
       <td>${new Date(o.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
     </tr>
@@ -221,13 +221,13 @@ function renderProductsTable() {
   table.innerHTML = products.map(p => `
     <tr>
       <td>
-        <img src="${p.image}" alt="${p.title}" style="width:40px; height:40px; border-radius:6px; object-fit:cover" onerror="this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80'" />
+        <img src="${p.image}" alt="${p.title}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; border:1px solid var(--glass-border)" onerror="this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80'" />
       </td>
       <td><strong>${p.title}</strong></td>
-      <td><span class="product-tag" style="position:static">${p.category}</span></td>
+      <td><span class="product-ribbon" style="position:static; display:inline-block">${p.category}</span></td>
       <td>$${p.price.toFixed(2)}</td>
       <td><span style="font-weight:700; color:${p.stock < 10 ? '#ef4444' : '#10b981'}">${p.stock} units</span></td>
-      <td>${p.stock > 0 ? '<span style="color:#10b981">In Stock</span>' : '<span style="color:#ef4444">Out of Stock</span>'}</td>
+      <td>${p.stock > 0 ? '<span style="color:#10b981; font-weight:700">In Stock</span>' : '<span style="color:#ef4444; font-weight:700">Out of Stock</span>'}</td>
     </tr>
   `).join('');
 }
